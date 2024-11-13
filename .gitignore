@@ -1,0 +1,59 @@
+# Python 가상 환경
+venv/
+bin/
+include/
+lib/
+pyvenv.cfg
+
+
+# 파이썬 컴파일 파일
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 환경 변수 파일 및 설정 파일
+#.env
+*.env
+*.ini
+*.cfg
+*.local
+
+# Jupyter Notebook 체크포인트
+.ipynb_checkpoints
+
+# 로그 파일 및 임시 파일
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# 운영 체제 파일
+.DS_Store
+Thumbs.db
+
+# 편집기 설정 파일
+.vscode/
+.idea/
+*.sublime-workspace
+
+# MyPy 타입 검사 캐시
+.mypy_cache/
+
+# Coverage(테스트 커버리지) 결과
+htmlcov/
+.coverage
+*.cover
+
+# 기타 도구
+*.sqlite3
+*.db
+celerybeat-schedule
+instance/
+.snapshots
+
+# 빌드 및 배포 파일
+dist/
+build/
+*.egg-info/
+.eggs/

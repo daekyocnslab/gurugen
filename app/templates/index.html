@@ -1,0 +1,213 @@
+<!--# 메인 페이지 템플릿-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차량 Dent 분석 결과</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 300px 1fr; /* 왼쪽: 300px, 오른쪽: 나머지 공간 */
+        }
+
+        .sidebar {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            overflow-y: auto; /* 세로 스크롤 */
+            height: 100vh; /* 화면 전체 높이에 맞춤 */
+        }
+
+        .sidebar h2 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .sidebar label, .sidebar input, .sidebar button {
+            margin-bottom: 15px;
+            display: block;
+            width: 100%;
+        }
+
+        .reports {
+            display: none; /* 처음에는 보이지 않도록 설정 */
+        }
+
+        .reports a {
+            display: block;
+            margin: 8px 0;
+            text-decoration: none;
+            color: blue;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .reports a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .buttons {
+            margin: 20px 0;
+        }
+
+        .buttons button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 왼쪽: 보고서 목록과 필터 -->
+    <div class="sidebar">
+        <h2>보고서 검색</h2>
+        
+        <!-- 날짜 선택 (항상 표시되는 달력) -->
+        <label for="date-input">날짜 선택:</label>
+        <input type="date" id="date-input">
+        
+        <!-- 차량 번호 입력 -->
+        <label for="car-number-input">차량 번호 입력:</label>
+        <input type="text" id="car-number-input" placeholder="차량 번호 입력">
+        
+        <!-- 검색 버튼 -->
+        <button onclick="filterReports()">검색</button>
+
+        <!-- 필터링된 보고서 목록 표시 -->
+        <div class="reports" id="report-list">
+            <!-- 검색 결과가 여기에 표시됨 -->
+        </div>
+    </div>
+
+    <!-- 오른쪽: 선택된 보고서 표시 -->
+    <div class="content">
+        <h1>차량 Dent 분석 결과</h1>
+        
+        <!-- 보고서 출력 및 영상 재생 버튼 -->
+        <div class="buttons">
+            <button class="print-button" id="print-button" style="display:none;" onclick="printReport()">선택 보고서 출력</button>
+            <button class="video-button" id="video-button" style="display:none;" onclick="playVideo()">선택 보고서 영상 재생</button>
+        </div>
+        
+        <!-- 선택된 보고서를 표시할 영역 -->
+        <div id="content-area"></div>
+    </div>
+
+    <script>
+        let currentReportId = null;
+        let currentFileName = '';
+
+        // 보고서 필터링 함수
+        function filterReports() {
+            const date = document.getElementById('date-input').value;
+            const carNumber = document.getElementById('car-number-input').value;
+
+            fetch(`/filter_reports?date=${date}&car_number=${carNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    const reportList = document.getElementById('report-list');
+                    reportList.innerHTML = '';
+
+                    if (data.length > 0) {
+                        reportList.style.display = 'block'; // 검색 결과가 있을 때만 표시
+                        data.forEach(report => {
+                            const reportLink = document.createElement('a');
+                            reportLink.href = "#";
+                            reportLink.classList.add('report-link');
+                            reportLink.textContent = `차량번호 ${report.car_number} 일시 ${report.data_time.slice(0, -4)} dent검출(${report.total_dents})`;
+                            reportLink.onclick = () => {
+                                loadReport(report.id, report.file_name);
+                                return false;
+                            };
+                            reportList.appendChild(reportLink);
+                        });
+                    } else {
+                        reportList.innerHTML = '<p>검색 결과가 없습니다.</p>';
+                        reportList.style.display = 'none'; // 검색 결과가 없을 때 숨김
+                    }
+                });
+        }
+
+        // 보고서 로드 함수
+        function loadReport(reportId, fileName) {
+            currentReportId = reportId;
+            currentFileName = fileName;
+
+            fetch(`/report/${reportId}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('content-area').innerHTML = data;
+                    document.getElementById('print-button').style.display = 'inline-block';
+                    document.getElementById('video-button').style.display = 'inline-block';
+                });
+        }
+
+        // 선택된 보고서 출력
+        function printReport() {
+            // 항상 최신 보고서를 fetch하여 출력 준비
+            fetch(`/report/${currentReportId}`)
+                .then(response => response.text())
+                .then(data => {
+                    // 보고서 내용을 content-area에 업데이트
+                    document.getElementById('content-area').innerHTML = data;
+
+                   const printWindow = window.open('', '', 'width=800,height=600');
+                   printWindow.document.write(`
+                        <html>
+                        <head>
+                            <title>Print Report</title>
+                            <style>
+                                /* 인쇄용 스타일 */
+                                @media print {
+                                    body {
+                                        margin: 0;
+                                        padding: 1cm; /* 용지 여백 설정 */
+                                        width: 100%;
+                                    }
+                                    .content-area {
+                                        width: 100%;
+                                        page-break-inside: avoid; /* 페이지가 끊기는 것을 방지 */
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="content-area">${data}</div>
+                        </body>
+                        </html>
+                    `);
+
+                printWindow.document.close();
+                printWindow.onload = () => {
+                    printWindow.print();
+                    printWindow.close();
+                };
+            });
+        }
+
+        // 선택된 보고서 영상 재생
+        function playVideo() {
+            if (currentFileName) {
+                fetch(`/video_page/${currentFileName}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('content-area').innerHTML = data;
+                    });
+            }
+        }
+    </script>
+</body>
+</html>

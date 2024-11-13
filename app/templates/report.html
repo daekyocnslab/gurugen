@@ -1,0 +1,264 @@
+<!-- # 보고서 페이지 템플릿-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차량 Dent 분석 결과</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2vh 2vw;
+            font-size: 1vw; /* 기본 폰트 크기 설정 */
+        }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .title {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            font-weight: bold;
+        }
+        .logo {
+            float: right;
+            width: 6vw;
+            margin-top: -3vw;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1vh;
+        }
+        .table th, .table td {
+            border: 1px solid black;
+            padding: 0.5vh 0.5vw;
+            text-align: center;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .section-title {
+            text-align: center;
+            margin: 1vh 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .car-diagram img {
+            width: 20vw;
+        }
+        .grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1vh;
+        }
+        .grid-item {
+            width: 48%;
+        }
+        #agreement {
+            width: 100%;
+            margin-top: 2vh;
+        }
+        #agreement table {
+            width: 100%;
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin-top: 1vh;
+        }
+        #agreement th, #agreement td {
+            border: 1px solid black;
+            padding: 0.5vh 0.5vw;
+            font-size: 0.9em;
+            text-align: left;
+        }
+        #agreement ul {
+            padding-left: 0;
+            list-style-position: inside;
+            font-size: 0.9em;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.9em;
+        }
+        .flex-container > div {
+            text-align: center;
+            width: 5vw;
+        }
+        .flex-container > .signature {
+            width: 15vw;
+            text-align: right;
+        }
+
+        /* 미디어 쿼리: 화면이 작아질 때 자동으로 조정 */
+        @media print {
+            body, .container {
+                padding: 1vh 1vw;
+                font-size: 0.9vw;
+            }
+            .logo {
+                width: 5vw;
+                margin-top: -2vw;
+            }
+            .car-diagram img {
+                width: 15vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">차량 Dent 분석 결과</div>
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Renault Logo" class="logo">
+
+        <!-- Main Information Table -->
+        <table class="table">
+            <tr>
+                <th>차량번호</th>
+                <th>고객명</th>
+                <th>차종</th>
+            </tr>
+            <tr>
+                <td>{{ report.car_number }}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>입차일시</th>
+                <th>연락처</th>
+                <th>색상</th>
+            </tr>
+            <tr>
+                <td>{{ report.data_time }}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>분석일시</th>
+                <td colspan="2">{{ report.analyze_time }}</td>
+            </tr>
+        </table>
+
+        <!-- Section Title -->
+        <div class="section-title">분석 결과</div>
+
+        <!-- Bonnet Table -->
+        <table class="table">
+            <tr>
+                <th>구분</th>
+                <th>소 (1~2)</th>
+                <th>중 (2~4)</th>
+                <th>대 (4~6)</th>
+                <th>스크래치</th>
+                <th>데미지</th>
+            </tr>
+            <tr>
+                <td>본넷</td>
+                <td>{{ report.front_dent_small }}</td>
+                <td>{{ report.front_dent_medium }}</td>
+                <td>{{ report.front_dent_large }}</td>
+                <td>{{ report.front_scratch }}</td>
+                <td>{{ report.front_damage }}</td>
+            </tr>
+        </table>
+
+        <!-- Car Diagram and Left/Right Tables -->
+        <div class="grid">
+            <div class="grid-item">
+                <table class="table">
+                    <tr>
+                        <th>LH</th>
+                        <th>수량</th>
+                    </tr>
+                    <tr>
+                        <td>소 (1~2)</td>
+                        <td>{{ report.left_dent_small }}</td>
+                    </tr>
+                    <tr>
+                        <td>중 (2~4)</td>
+                        <td>{{ report.left_dent_medium }}</td>
+                    </tr>
+                    <tr>
+                        <td>대 (4~6)</td>
+                        <td>{{ report.left_dent_large }}</td>
+                    </tr>
+                    <tr>
+                        <td>스크래치</td>
+                        <td>{{ report.left_scratch }}</td>
+                    </tr>
+                    <tr>
+                        <td>데미지</td>
+                        <td>{{ report.left_damage }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="car-diagram">
+                <img src="{{ url_for('static', filename='car-diagram.png') }}" alt="Car Diagram">
+            </div>
+
+            <div class="grid-item">
+                <table class="table">
+                    <tr>
+                        <th>RH</th>
+                        <th>수량</th>
+                    </tr>
+                    <tr>
+                        <td>소 (1~2)</td>
+                        <td>{{ report.right_dent_small }}</td>
+                    </tr>
+                    <tr>
+                        <td>중 (2~4)</td>
+                        <td>{{ report.right_dent_medium }}</td>
+                    </tr>
+                    <tr>
+                        <td>대 (4~6)</td>
+                        <td>{{ report.right_dent_large }}</td>
+                    </tr>
+                    <tr>
+                        <td>스크래치</td>
+                        <td>{{ report.right_scratch }}</td>
+                    </tr>
+                    <tr>
+                        <td>데미지</td>
+                        <td>{{ report.right_damage }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Agreement Section -->
+        <div id="agreement">
+            <table>
+                <tr>
+                    <th bgcolor="#D3D3D3">차량 외관의 dent 분석을 위한 영상 촬영에 동의합니다.</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>영상의 수집 목적은 dent 분석용으로만 사용합니다.</li>
+                            <li>영상은 사업소 내에서만 이용합니다.</li>
+                            <li>영상의 최대 보유 기간은 30일이며, 이후 영구 삭제됩니다.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="flex-container">
+                            <div>년</div>
+                            <div>월</div>
+                            <div>일</div>
+                            <div class="signature">의뢰인(성명 및 서명)</div>
+                            <div>________</div>
+                            <div>인</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

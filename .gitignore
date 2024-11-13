@@ -12,8 +12,8 @@ __pycache__/
 *$py.class
 
 # 환경 변수 파일 및 설정 파일
-#.env
-#*.env
+.env
+*.env
 *.ini
 *.cfg
 *.local

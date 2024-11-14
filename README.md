@@ -24,7 +24,7 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 1. **가상환경(grugen) 구축**  
    프로젝트의 격리된 환경을 설정하기 위해 가상 환경을 생성합니다.
    ```bash
-   $ python -m venv grugen
+   $ python -m venv gurugen
     ```
 
 2. **가상환경 활성화**
@@ -33,11 +33,11 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 
 - **Windows**
   ```bash
-  $ grugen\Scripts\activate
+  $ gurugen\Scripts\activate
   ```
 - **MacOS/Linux**
   ```bash
-  $ source grugen/bin/activate
+  $ source gurugen/bin/activate
   ```
   
    가상 환경이 활성화되면 (grugen)이라는 프롬프트가 표시되며, 가상 환경 내에서 작업 중임을 알 수 있습니다.

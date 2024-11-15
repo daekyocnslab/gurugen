@@ -1,7 +1,6 @@
 # GURUGEN DENT 프로젝트
  Dent 자동분석 시스템을 위한 웹 프로젝트입니다.
 
-
 ## 업데이트
 - **2024-11-14 : 프로젝트 초기 구성 완료
 
@@ -19,6 +18,11 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 └── webapp.py           - 웹 애플리케이션의 메인 실행 파일입니다.
 ```
 
+## Python 버전
+
+GURUGEN DENT 프로젝트는 **Python 3.9.20** 버전을 권장합니다. 프로젝트 호환성을 위해 해당 버전으로 가상 환경을 설정하시길 권장합니다. 
+
+
 ## 환경 설정 및 실행 방법
 
 1. **가상환경(grugen) 구축**  
@@ -33,11 +37,11 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 
 - **Windows**
   ```bash
-   Scripts\activate
+   .\Scripts\activate
   ```
 - **MacOS/Linux**
   ```bash
-   source bin/activate
+   source ./bin/activate
   ```
   
    가상 환경이 활성화되면 (grugen)이라는 프롬프트가 표시되며, 가상 환경 내에서 작업 중임을 알 수 있습니다.

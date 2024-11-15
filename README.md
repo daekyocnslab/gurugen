@@ -24,7 +24,7 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 1. **가상환경(grugen) 구축**  
    프로젝트의 격리된 환경을 설정하기 위해 가상 환경을 생성합니다.
    ```bash
-   $ python -m venv gurugen
+    python -m venv .
     ```
 
 2. **가상환경 활성화**
@@ -33,17 +33,17 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 
 - **Windows**
   ```bash
-  $ gurugen\Scripts\activate
+   Scripts\activate
   ```
 - **MacOS/Linux**
   ```bash
-  $ source gurugen/bin/activate
+   source bin/activate
   ```
   
    가상 환경이 활성화되면 (grugen)이라는 프롬프트가 표시되며, 가상 환경 내에서 작업 중임을 알 수 있습니다.
    가상 환경을 비활성화하려면 다음 명령어를 사용하세요.
   ```bash
-  $ deactivate
+   deactivate
   ```
 
 3. **필수 라이브러리 설치**
@@ -51,7 +51,7 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
     가상 환경이 활성화된 상태에서 `requirements.txt` 파일을 사용하여 프로젝트 실행에 필요한 라이브러리를 설치합니다.
 
    ```bash
-   $ pip install -r requirements.txt
+    pip install -r requirements.txt
    ```
 
 3. **환경 변수 설정**
@@ -71,7 +71,7 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
     `webapp.py`는 GURUGEN DENT 시스템의 메인 실행 파일입니다. 이 파일을 실행하여 웹 애플리케이션을 시작할 수 있습니다.
 
    ```bash
-   $ python webapp.py
+    python webapp.py
    ```
 
 애플리케이션을 종료하려면 터미널에서 Ctrl + C를 눌러 서버를 중지합니다.

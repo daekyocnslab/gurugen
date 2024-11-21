@@ -25,7 +25,26 @@ def fetch_report_by_id(report_id):
     """특정 ID의 보고서를 조회"""
     with get_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM car_dent_analysis WHERE id=%s", (report_id,))
+            # 쿼리 수정: 각 섹션의 합계(total)와 기존 필드를 포함
+            cursor.execute("""
+                SELECT 
+                    *,
+                    -- 각 섹션의 덴트 합산
+                    (left_dent_large + left_dent_medium + left_dent_small) AS left_dent_total,
+                    (right_dent_large + right_dent_medium + right_dent_small) AS right_dent_total,
+                    (front_dent_large + front_dent_medium + front_dent_small) AS front_dent_total,
+                    (tail_dent_large + tail_dent_medium + tail_dent_small) AS tail_dent_total,
+                    -- 각 섹션의 덴트 합산 (필요 시 추가)
+                    (left_dent_large + left_dent_medium + left_dent_small+right_dent_large + right_dent_medium + right_dent_small+front_dent_large + front_dent_medium + front_dent_small+tail_dent_large + tail_dent_medium + tail_dent_small) AS total_dents,
+                    -- 각 섹션의 스크래치 합산 (필요 시 추가)
+                    (left_scratch + right_scratch + front_scratch + tail_scratch) AS total_scratch,
+                    -- 각 섹션의 데미지 합산 (필요 시 추가)
+                    (left_damage + right_damage + front_damage + tail_damage) AS total_damage
+                FROM 
+                    car_dent_analysis
+                WHERE 
+                    id = %s
+            """, (report_id,))
             return cursor.fetchone()
 
 

@@ -29,7 +29,9 @@ def main_page():
 @main_routes.route('/report/<int:report_id>')
 def report_page(report_id):
     report_data = fetch_report_by_id(report_id)
-    return render_template('report.html', report=report_data)
+    if not report_data:
+        return jsonify({"error": "Report not found"}), 404
+    return jsonify(report_data)
 
 @main_routes.route('/video/<path:filename>')
 def video(filename):

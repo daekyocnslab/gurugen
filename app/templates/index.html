@@ -44,10 +44,10 @@
         <div class="__inner">
             <!-- 상단 버튼 -->
             <ul class="top-handle-menu">
-                <li>
-                    <!-- 결과 다운로드 버튼 -->
-                    <button id="downloadResult" class="btn icon download" title="파일 저장"></button>
-                </li>
+<!--                <li>-->
+<!--                    &lt;!&ndash; 결과 다운로드 버튼 &ndash;&gt;-->
+<!--                    <button id="downloadResult" class="btn icon download" title="파일 저장"></button>-->
+<!--                </li>-->
                 <li>
                     <!-- 결과 인쇄 버튼 -->
                     <button id="printResult" class="btn icon print" title="인쇄"></button>
@@ -299,10 +299,10 @@
             clickedPart.classList.add("isDent");
 
             // `data-file-name` 속성 읽기
-            const fileName = data.parentElement.dataset.fileName;
-            console.log("Part clicked:", data.dataset);
+            const fileName = clickedPart.parentElement.dataset.fileName;
+            console.log("Part clicked:", clickedPart.dataset);
 
-            showPopUp(data.dataset, fileName); // 팝업 표시
+            showPopUp(clickedPart.dataset, fileName); // 팝업 표시
 
             return;
         }

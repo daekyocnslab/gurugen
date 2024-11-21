@@ -1,213 +1,455 @@
-<!--# 메인 페이지 템플릿-->
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="kr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>차량 Dent 분석 결과</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: grid;
-            grid-template-columns: 300px 1fr; /* 왼쪽: 300px, 오른쪽: 나머지 공간 */
-        }
-
-        .sidebar {
-            background-color: #f4f4f4;
-            padding: 20px;
-            border-right: 1px solid #ddd;
-            overflow-y: auto; /* 세로 스크롤 */
-            height: 100vh; /* 화면 전체 높이에 맞춤 */
-        }
-
-        .sidebar h2 {
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .sidebar label, .sidebar input, .sidebar button {
-            margin-bottom: 15px;
-            display: block;
-            width: 100%;
-        }
-
-        .reports {
-            display: none; /* 처음에는 보이지 않도록 설정 */
-        }
-
-        .reports a {
-            display: block;
-            margin: 8px 0;
-            text-decoration: none;
-            color: blue;
-            padding: 5px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .reports a:hover {
-            text-decoration: underline;
-        }
-
-        .content {
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .buttons {
-            margin: 20px 0;
-        }
-
-        .buttons button {
-            margin-right: 10px;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dent 자동분석 시스템</title>
+    <!-- DatePicker 및 스타일 시트 -->
+    <link rel="stylesheet" href="../static/vendor/jquery-ui-datepicker/jquery-ui.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="../static/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../static/vendor/jquery-ui-datepicker/jquery-ui.min.js"></script>
 </head>
 <body>
-    <!-- 왼쪽: 보고서 목록과 필터 -->
-    <div class="sidebar">
-        <h2>보고서 검색</h2>
-        
-        <!-- 날짜 선택 (항상 표시되는 달력) -->
-        <label for="date-input">날짜 선택:</label>
-        <input type="date" id="date-input">
-        
-        <!-- 차량 번호 입력 -->
-        <label for="car-number-input">차량 번호 입력:</label>
-        <input type="text" id="car-number-input" placeholder="차량 번호 입력">
-        
-        <!-- 검색 버튼 -->
-        <button onclick="filterReports()">검색</button>
-
-        <!-- 필터링된 보고서 목록 표시 -->
-        <div class="reports" id="report-list">
-            <!-- 검색 결과가 여기에 표시됨 -->
+<div id="wrap">
+    <!-- Sidebar -->
+    <div id="sideMenu">
+        <div class="fixed-section">
+            <!-- 로고 -->
+            <h1 class="logo"><img src="../static/images/logo.svg" alt="Audi"></h1>
+            <!-- 날짜 선택기 -->
+            <div class="datepicker-section">
+                <h2 class="title">일자별 차량</h2>
+                <div id="datepickerDent"></div>
+            </div>
+            <!-- 검색 섹션 -->
+            <div class="search-section">
+                <p>2024년 10월 21일 총 분석 차량 수</p>
+                <!-- 분석 차량 수를 표시하는 요소 -->
+                <strong class="total-num">0</strong>
+                <div class="search-box">
+                    <!-- 차량 번호 검색 입력 -->
+                    <input type="text" placeholder="차량번호 검색" class="search-input" onchange="filterReports()">
+                </div>
+            </div>
+        </div>
+        <!-- 검색 결과 리스트 -->
+        <div class="result-section">
+            <ul id="resultAccordion" class="result-list"></ul>
         </div>
     </div>
 
-    <!-- 오른쪽: 선택된 보고서 표시 -->
-    <div class="content">
-        <h1>차량 Dent 분석 결과</h1>
-        
-        <!-- 보고서 출력 및 영상 재생 버튼 -->
-        <div class="buttons">
-            <button class="print-button" id="print-button" style="display:none;" onclick="printReport()">선택 보고서 출력</button>
-            <button class="video-button" id="video-button" style="display:none;" onclick="playVideo()">선택 보고서 영상 재생</button>
+    <!-- Main Content -->
+    <main id="content">
+        <div class="__inner">
+            <!-- 상단 버튼 -->
+            <ul class="top-handle-menu">
+                <li>
+                    <!-- 결과 다운로드 버튼 -->
+                    <button id="downloadResult" class="btn icon download" title="파일 저장"></button>
+                </li>
+                <li>
+                    <!-- 결과 인쇄 버튼 -->
+                    <button id="printResult" class="btn icon print" title="인쇄"></button>
+                </li>
+            </ul>
+            <!-- 메인 패널 -->
+            <div class="main-pannel">
+                <h3 class="pannel-title">차량 덴트 분석 결과</h3>
+                <div class="pannel-content">
+                    <!-- 차량 요약 정보 -->
+                    <ul class="summary-list">
+                        <li class="summary-item">
+                            <dl>
+                                <dt>차량 번호</dt>
+                                <dd></dd>
+                            </dl>
+                        </li>
+                        <li class="summary-item">
+                            <dl>
+                                <dt>입차 일시</dt>
+                                <dd></dd>
+                            </dl>
+                        </li>
+                        <li class="summary-item">
+                            <dl>
+                                <dt>분석 일시</dt>
+                                <dd></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <!-- 덴트 분석 수량 -->
+                    <div class="dent-total">
+                        <h4 class="title">전체 덴트 수량</h4>
+                        <table class="table">
+                            <colgroup>
+                                <col width="25%">
+                                <col width="25%">
+                                <col width="25%">
+                                <col width="25%">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>구분</th>
+                                <td>덴트</td>
+                                <td>스크래치</td>
+                                <td>데미지</td>
+                            </tr>
+                            <tr>
+                                <th>수량</th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 각 위치별 덴트 테이블 -->
+                    <article class="vehicle-wrap">
+                        <div class="__vehicle-bg"></div>
+                        <!-- A 좌측 -->
+                        <div class="dent-table-box A">
+                            <h4 class="title">A 좌측</h4>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>수량</th>
+                                </tr>
+                                <tr>
+                                    <td>덴트</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>스크래치</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>데미지</td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- B 본넷 -->
+                        <div class="dent-table-box B">
+                            <h4 class="title">B 본넷</h4>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>수량</th>
+                                </tr>
+                                <tr>
+                                    <td>덴트</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>스크래치</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>데미지</td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- C 우측 -->
+                        <div class="dent-table-box C">
+                            <h4 class="title">C 우측</h4>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>수량</th>
+                                </tr>
+                                <tr>
+                                    <td>덴트</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>스크래치</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>데미지</td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- D 트렁크 -->
+                        <div class="dent-table-box D">
+                            <h4 class="title">D 트렁크(테일 게이트)</h4>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>수량</th>
+                                </tr>
+                                <tr>
+                                    <td>덴트</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>스크래치</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>데미지</td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+            </div>
         </div>
-        
-        <!-- 선택된 보고서를 표시할 영역 -->
-        <div id="content-area"></div>
+    </main>
+</div>
+
+<!-- Popup -->
+<div id="vehicleVideoPop" class="popup-wrap">
+    <div class="popup-container">
+        <div class="popup-content">
+            <div class="popup-head">
+                <p class="title-text">데이터가 없습니다.</p>
+                <button type="button" class="btn icon btn-close" title="닫기"></button>
+            </div>
+            <div class="popup-body">
+                <video class="vehicle-video" controls src="../static/video/test.webm" type="video/webm">
+                    동영상을 지원하지 않는 브라우저입니다.
+                </video>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        let currentReportId = null;
-        let currentFileName = '';
+<script type="module">
+    import Accordion from '../static/js/Accordion.js';
+    import Popup from '../static/js/Popup.js';
 
-        // 보고서 필터링 함수
-        function filterReports() {
-            const date = document.getElementById('date-input').value;
-            const carNumber = document.getElementById('car-number-input').value;
+    let currentReportId = null;
 
-            fetch(`/filter_reports?date=${date}&car_number=${carNumber}`)
-                .then(response => response.json())
-                .then(data => {
-                    const reportList = document.getElementById('report-list');
-                    reportList.innerHTML = '';
+    // 초기화
+    function initialize() {
+        setupDatePicker(); // DatePicker 초기화
+        setupEventListeners(); // 이벤트 리스너 등록
+    }
 
-                    if (data.length > 0) {
-                        reportList.style.display = 'block'; // 검색 결과가 있을 때만 표시
-                        data.forEach(report => {
-                            const reportLink = document.createElement('a');
-                            reportLink.href = "#";
-                            reportLink.classList.add('report-link');
-                            reportLink.textContent = `차량번호 ${report.car_number} 일시 ${report.data_time.slice(0, -4)} dent검출(${report.total_dents})`;
-                            reportLink.onclick = () => {
-                                loadReport(report.id, report.file_name);
-                                return false;
-                            };
-                            reportList.appendChild(reportLink);
-                        });
-                    } else {
-                        reportList.innerHTML = '<p>검색 결과가 없습니다.</p>';
-                        reportList.style.display = 'none'; // 검색 결과가 없을 때 숨김
-                    }
-                });
+    // DatePicker 설정
+    function setupDatePicker() {
+        $("#datepickerDent").datepicker({
+            dateFormat: 'yy-mm-dd',
+            showMonthAfterYear: true,
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            changeMonth: true,
+            changeYear: true,
+            onSelect: filterReports // 날짜 선택 시 필터링
+        });
+        addYearSuffix(); // '년' 텍스트 추가
+    }
+
+    // '년' 텍스트 추가
+    function addYearSuffix() {
+        $(".ui-datepicker-year option").each(function () {
+            const yearText = $(this).val();
+            $(this).text(yearText + "년");
+        });
+    }
+
+    // 이벤트 리스너 설정
+    function setupEventListeners() {
+        document.querySelector("#resultAccordion").addEventListener("click", handleAccordionClick);
+        document.querySelector("#printResult").addEventListener("click", printReport);
+    }
+
+    // 아코디언 클릭 처리
+    function handleAccordionClick(event) {
+        const target = event.target;
+
+        // 차량 헤드 클릭 시
+        const clickedVehicle = target.closest(".accord-head");
+        if (clickedVehicle) {
+            const vehicleId = clickedVehicle.parentElement.querySelector(".parts-list").dataset.id;
+            console.log("Vehicle clicked - Loading report for ID:", vehicleId);
+            loadReport(vehicleId);
+            return;
         }
 
-        // 보고서 로드 함수
-        function loadReport(reportId, fileName) {
-            currentReportId = reportId;
-            currentFileName = fileName;
+        // 부품 리스트 클릭 시
+        const clickedPart = target.closest("li");
+        if (clickedPart) {
+            handlePartClick(clickedPart); // 팝업 표시
+            return;
+        }
+    }
 
-            fetch(`/report/${reportId}`)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('content-area').innerHTML = data;
-                    document.getElementById('print-button').style.display = 'inline-block';
-                    document.getElementById('video-button').style.display = 'inline-block';
-                });
+    // 보고서 필터링
+    function filterReports() {
+        const date = $("#datepickerDent").datepicker("getDate");
+        const searchInput = $(".search-input").val().trim();
+        if (!date) return alert("유효하지 않은 날짜입니다.");
+
+        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+
+        fetch(`/filter_reports?date=${formattedDate}&car_number=${searchInput}`)
+            .then((response) => response.json())
+            .then(updateAccordion) // 아코디언 업데이트
+            .catch(console.error);
+    }
+
+    // 아코디언 업데이트
+    function updateAccordion(data) {
+        const accordion = document.querySelector("#resultAccordion");
+        accordion.innerHTML = "";
+
+        // total-num 업데이트
+        const totalNumElement = document.querySelector(".total-num");
+
+        // 데이터가 없을 경우 처리
+        if (!data.length) {
+            accordion.innerHTML = '<li class="no-results">검색 결과가 없습니다.</li>';
+            totalNumElement.textContent = "0";
+            return;
         }
 
-        // 선택된 보고서 출력
-        function printReport() {
-            // 항상 최신 보고서를 fetch하여 출력 준비
-            fetch(`/report/${currentReportId}`)
-                .then(response => response.text())
-                .then(data => {
-                    // 보고서 내용을 content-area에 업데이트
-                    document.getElementById('content-area').innerHTML = data;
+        totalNumElement.textContent = data.length;
 
-                   const printWindow = window.open('', '', 'width=800,height=600');
-                   printWindow.document.write(`
-                        <html>
-                        <head>
-                            <title>Print Report</title>
-                            <style>
-                                /* 인쇄용 스타일 */
-                                @media print {
-                                    body {
-                                        margin: 0;
-                                        padding: 1cm; /* 용지 여백 설정 */
-                                        width: 100%;
-                                    }
-                                    .content-area {
-                                        width: 100%;
-                                        page-break-inside: avoid; /* 페이지가 끊기는 것을 방지 */
-                                    }
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <div class="content-area">${data}</div>
-                        </body>
-                        </html>
-                    `);
+        data.forEach(vehicle => {
+            const listItem = document.createElement("li");
+            listItem.className = "result-item accord-item";
+            listItem.innerHTML = `
+                <div class="accord-head ${vehicle.total_dents > 0 ? "isDent" : ""}">
+                    <svg class="icon" width="20" height="20" viewBox="0 0 20 20" fill="#1D1D1E" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14 10.4865L6 16V4L14 10.4865Z"/>
+                    </svg>
+                    <span class="text">${vehicle.car_number}</span>
+                </div>
+                <div class="accord-body">
+                    <ul class="parts-list" data-id="${vehicle.id}" data-file-name="${vehicle.file_name}">
+                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-part="우측 하단">우측 하단 (camera01)</li>
+                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-part="우측 중간">우측 중간 (camera02)</li>
+                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-part="우측 상단">우측 상단 (camera03)</li>
+                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-part="좌측 하단">좌측 하단 (camera04)</li>
+                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-part="좌측 중간">좌측 중간 (camera05)</li>
+                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-part="좌측 상단">좌측 상단 (camera06)</li>
+                    </ul>
+                </div>`;
+            accordion.appendChild(listItem);
+        });
 
-                printWindow.document.close();
-                printWindow.onload = () => {
-                    printWindow.print();
-                    printWindow.close();
-                };
-            });
-        }
+        new Accordion("#resultAccordion");
+    }
 
-        // 선택된 보고서 영상 재생
-        function playVideo() {
-            if (currentFileName) {
-                fetch(`/video_page/${currentFileName}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('content-area').innerHTML = data;
-                    });
+    // 보고서 로드
+    function loadReport(reportId) {
+        fetch(`/report/${reportId}`)
+            .then((response) => response.json())
+            .then(updateMainPanel) // 메인 패널 업데이트
+            .catch(console.error);
+    }
+
+    // 메인 패널 업데이트
+    function updateMainPanel(data) {
+        currentReportId = data.id;
+
+        document.querySelector(".pannel-content").innerHTML = `
+            <ul class="summary-list">
+                <li><dl><dt>차량 번호</dt><dd>${data.car_number}</dd></dl></li>
+                <li><dl><dt>입차 일시</dt><dd>${formatDateTime(data.data_time)}</dd></dl></li>
+                <li><dl><dt>분석 일시</dt><dd>${formatDateTime(data.analyze_time)}</dd></dl></li>
+            </ul>
+            <div class="dent-total">
+                <h4 class="title">전체 덴트 수량</h4>
+                <table class="table">
+                    <tr><th>구분</th><td>덴트</td><td>스크래치</td><td>데미지</td></tr>
+                    <tr><th>수량</th><td>${data.total_dents}</td><td>${data.total_scratch}</td><td>${data.total_damage}</td></tr>
+                </table>
+            </div>
+            <article class="vehicle-wrap">
+                <div class="__vehicle-bg"></div>
+                ${generateDentTable('A', 'A 좌측', data.left_dent_total, data.left_scratch, data.left_damage)}
+                ${generateDentTable('B', 'B 본넷', data.front_dent_total, data.front_scratch, data.front_damage)}
+                ${generateDentTable('C', 'C 우측', data.right_dent_total, data.right_scratch, data.right_damage)}
+                ${generateDentTable('D', 'D 트렁크(테일 게이트)', data.tail_dent_total, data.tail_scratch, data.tail_damage)}
+            </article>`;
+    }
+
+    // 날짜 및 시간 포맷
+    function formatDateTime(dateTime) {
+        const date = new Date(dateTime);
+        return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")} / ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+    }
+
+    // 선택된 보고서 출력
+    function printReport() {
+        const $printBtn = document.querySelector('#printResult');
+        $printBtn.addEventListener('click', () => {
+            print();
+        })
+    }
+
+    // 덴트 테이블 생성 함수
+    function generateDentTable(section, sectionName, dent, scratch, damage) {
+        return `
+    <div class="dent-table-box ${section}">
+        <h4 class="title">${sectionName}</h4>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>구분</th>
+                    <th>수량</th>
+                </tr>
+                <tr>
+                    <td>덴트</td>
+                    <td>${dent || 0}</td>
+                </tr>
+                 <tr>
+                    <td>스크래치</td>
+                    <td>${scratch || 0}</td>
+                </tr>
+                <tr>
+                    <td>데미지</td>
+                    <td>${damage || 0}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>`;
+    }
+
+    //팝업 표시
+    function handlePartClick(data) {
+        if (data) {
+
+            // `data-file-name` 속성 읽기
+            const fileName = data.parentElement.dataset.fileName;
+
+            if (fileName) {
+                console.log("Part clicked:", data.dataset);
+                let clickedPart = data.dataset;
+                // 비디오 태그의 src 업데이트
+                const popupContent = document.querySelector("#vehicleVideoPop .title-text");
+                popupContent.innerHTML = `<span class="date">${clickedPart.date}</span><span class="number">${clickedPart.number}</span><span class="part">${clickedPart.part}</span>`;
+                const videoElement = document.querySelector(".vehicle-video");
+
+                // videoElement.src = `../static/video/${fileName}`; // 비디오 경로 설정
+                videoElement.src = `../static/video/test.webm`; // 비디오 경로 설정
+
+                // 팝업 열기
+                const popup = new Popup("#vehicleVideoPop");
+                popup.open();
+            } else {
+                console.error("파일 이름이 없습니다.");
             }
         }
-    </script>
+    }
+
+
+    // 초기화 실행
+    initialize();
+</script>
 </body>
 </html>

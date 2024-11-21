@@ -1,0 +1,21 @@
+:root {
+    --font-family: 'Noto Sans KR', sans-serif;
+    --font-color: #1D1D1E;
+    --font-size: 16px;
+    --line-height: 1.5;
+
+    --font-h1: 24px;
+    --font-h2: 20px;
+    --font-h3: 18px;
+
+    --primary: #F08848;
+    --form-bg: #F7F7F7;
+    --form-border: #dddddd;
+    --black: var(--font-color);
+
+    --space: 20px;
+    --space2: 40px;
+    --radius: 10px;
+
+    --easing: ease-out;
+}

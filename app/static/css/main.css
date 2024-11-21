@@ -1,0 +1,480 @@
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    color: var(--font-color);
+    line-height: var(--line-height);
+}
+input, select, textarea, button {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    color: var(--font-color);
+    line-height: var(--line-height);
+    background-color: #fff;
+    border: 1px solid var(--form-border);
+}
+input::placeholder {
+    color: #9B9FA0;
+    font-weight: 400;
+}
+.btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    transition: color .15s var(--easing), 
+                background-color .15s var(--easing), 
+                border-color .15s var(--easing), 
+                box-shadow .15s var(--easing);
+    cursor: pointer;
+}
+.btn.icon {
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn.icon.print {
+    background-image: url(../images/icon/print.svg);
+    background-size: 27px 24px;
+}
+.btn.icon.download {
+    background-image: url(../images/icon/download.svg);
+    background-size: 24px 24px;
+}
+/* 스크롤바 */
+::-webkit-scrollbar {
+    width: 6px; 
+    height: 6px; 
+}
+::-webkit-scrollbar-track {
+    background: #DDDDDD; 
+    border-radius: 0px; 
+}
+::-webkit-scrollbar-thumb {
+    background: #9B9FA0; 
+    border-radius: 0px;
+}
+#wrap {
+    position: relative;
+    display: flex;
+    background-color: #F4F6F6;
+    min-height: 100svh;
+    max-height: 100svh;
+    overflow: hidden;
+}
+
+/* ================================================== */
+/* 사이드 메뉴 */
+/* ================================================== */
+#sideMenu {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 340px;
+    min-width: 340px;
+    max-height: 100svh;
+    background-color: #fff;
+    padding: var(--space);
+}
+#sideMenu > .fixed-section {
+    flex: 0 0 auto;
+}
+#sideMenu > .result-section {
+    flex: 1;
+}
+#sideMenu .logo {
+    text-align: center;
+    padding: 0 0 var(--space);
+    user-select: none;
+}
+.datepicker-section .title {
+    padding: 0.5em;
+    background-color: var(--primary);
+    border-radius: var(--radius) var(--radius) 0 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* datepicker override  { */
+#datepickerDent .ui-datepicker {
+    width: 100%;
+    padding: 0 5px;
+    border: 1px solid #DDDDDD;
+    user-select: none;
+}
+#datepickerDent .ui-datepicker-header {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+#datepickerDent .ui-datepicker select.ui-datepicker-month, 
+#datepickerDent .ui-datepicker select.ui-datepicker-year {
+    width: auto;
+    appearance: none; 
+    background-color: transparent;
+    background-image: url('../images/icon/select-arrow.svg'); 
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    background-size: 12px;
+    padding-right: 16px; 
+    border: 0;
+    font-weight: 500;
+}
+#datepickerDent .ui-datepicker select.ui-datepicker-month {
+    margin-left: var(--space)
+}
+#datepickerDent .ui-datepicker th {
+    font-weight: 400;
+}
+#datepickerDent .ui-datepicker td {
+    padding: 2px 5px;
+}
+#datepickerDent .ui-datepicker td span, 
+#datepickerDent .ui-datepicker td a {
+    line-height: 27px;
+    padding: 0 0 1px;
+    text-align: center;
+    border-radius: 100%;
+}
+#datepickerDent .ui-priority-secondary, .ui-widget-content .ui-priority-secondary {
+    opacity: 1;
+    color: #D5D5D5
+}
+/* } datepicker override */
+
+.search-section {
+    background-color: var(--form-bg);
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: var(--space);
+    border-bottom: 4px solid var(--primary);
+    text-align: center;
+}
+.search-section .total-num {
+    display: block;
+    font-size: var(--font-h1);
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.search-section .search-input {
+    padding: 8px 50px 10px 20px;
+    border-radius: 50em;
+    background-image: url('../images/icon/search.svg'); 
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+}
+.result-section {
+    margin-top: var(--space);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.result-section .result-list {
+    border-bottom: 1px solid var(--form-border)
+}
+.result-section .result-item {
+    border-top: 1px solid var(--form-border)
+}
+.result-item .accord-head {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.result-item .accord-head:hover {
+    background-color: var(--form-bg);
+}
+.result-item .isDent {
+    color: var(--primary)
+}
+.result-item .isDent .icon {
+    fill: var(--primary)
+}
+.result-item .accord-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s var(--easing);
+}
+.accord-item.active .accord-head .icon {
+    transform: rotate(90deg);
+}
+.accord-item.active .accord-body {
+    max-height: 200px; 
+}
+.accord-item .parts-list {
+    padding: 10px 10px 10px 40px;
+    border-top: 1px dashed var(--form-border);
+}
+.parts-list > li {
+    cursor: pointer;
+}
+.parts-list > li:hover {
+    text-decoration: underline;
+}
+.parts-list > li + li {
+    margin-top: 5px;
+}
+
+/* ================================================== */
+/* 메인 컨텐츠 */
+/* ================================================== */
+#content {
+    flex: 1;
+    padding: 80px var(--space2) var(--space2);
+    overflow: auto;
+}
+#content > .__inner {
+    position: relative;
+    /* min-width: 1190px; */
+    max-width: 1500px;
+    margin: 0 auto;
+}
+.top-handle-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: -50px;
+    right: 0;
+}
+.top-handle-menu .btn.icon {
+    background-color: transparent;
+    border: 0;
+}
+.main-pannel {
+    background-color: #fff;
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+}
+.main-pannel > .pannel-title {
+    background-color: var(--black);
+    padding: 12px;
+    text-align: center;
+    font-size: var(--font-h1);
+    font-weight: 700;
+    color: #fff;
+}
+.main-pannel .pannel-content {
+    padding: var(--space2);
+}
+.summary-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space);
+}
+.summary-list > li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100px;
+    background-color: #FCE7DA;
+    border-radius: var(--radius);
+    text-align: center;
+    font-size: var(--font-h2);
+}
+.summary-list .summary-item dd {
+    margin-top: 5px;
+    font-weight: 700;
+}
+.dent-total {
+    margin-top: var(--space2)
+}
+.dent-total > .title {
+    height: 40px;
+    line-height: 40px;
+    padding-left: var(--space);
+    background: url(../images/title-bg.png) left top no-repeat;
+    font-size: var(--font-h3);
+    font-weight: 700;
+    color: #fff;
+    border-bottom: 4px solid var(--primary);
+}
+.table {
+    table-layout: fixed;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid var(--form-border);
+}
+.table th, .table td {
+    padding: 7.5px;
+    border-bottom: 1px solid var(--form-border);
+    border-right: 1px solid var(--form-border);
+    text-align: center;
+}
+.table th:last-child,
+.table td:last-child {
+    border-right: 0;
+}
+.table th {
+    background-color: var(--form-bg);
+}
+.vehicle-wrap {
+    --table-width: 300px;
+
+    position: relative;
+    max-width: 1216px;
+    height: 432px;
+    padding: 0 calc(var(--table-width) + 10px);
+    margin: 50px auto 0;
+}
+.vehicle-wrap .__vehicle-bg {
+    width: 100%;
+    height: 100%;
+    background: url(../images/vehicleFloorPlan.png) no-repeat center / contain; 
+}
+.dent-table-box {
+    position: absolute;
+    width: var(--table-width);
+}
+.dent-table-box.A {
+    top: 17px;
+    left: 0;
+}
+.dent-table-box.B {
+    left: 0;
+    bottom: 17px;
+}
+.dent-table-box.C {
+    top: 17px;
+    right: 0;
+}
+.dent-table-box.D {
+    right: 0;
+    bottom: 17px;
+}
+.dent-table-box > .title {
+    --bg-color: #7E7E7E;
+
+    position: relative;
+    width: 90%;
+    background-color: var(--bg-color);
+    padding: 6px;
+    text-align: center;
+    font-size: var(--font-h3);
+    font-weight: 700;
+    color: #fff;
+}
+.dent-table-box > .title::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 39px solid var(--bg-color);
+}
+.dent-table-box.A > .title,
+.dent-table-box.B > .title {
+    border-top-left-radius: var(--radius);
+}
+.dent-table-box.A > .title::after,
+.dent-table-box.B > .title::after {
+    right: -30px;
+}
+.dent-table-box.C > .title,
+.dent-table-box.D > .title {
+    margin-left: auto;
+    border-top-right-radius: var(--radius);
+}
+.dent-table-box.C > .title::after,
+.dent-table-box.D > .title::after {
+    left: -30px;
+}
+.dent-table-box .table th, 
+.dent-table-box .table td {
+    padding: 5.5px;
+}
+
+/* ================================================== */
+/* 팝업 */
+/* html 사용법
+    <div class="popup-wrap">
+        <div class="popup-container">
+            <div class="popup-content">
+                <div class="popup-head">
+                    ...
+                    <button type="button" class="btn icon btn-close" title="닫기"></button>
+                </div>
+                <div class="popup-body">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
+*/
+/* ================================================== */
+.popup-wrap {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.5);
+}
+.popup-wrap.open {
+    display: block;
+}
+.popup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.popup-content {
+    max-width: 920px;
+    background-color: #fff;
+    border-radius: var(--radius);
+    overflow: hidden; 
+}
+.popup-content .popup-head {
+    position: relative;
+    padding: var(--space);
+    background-color: var(--black);
+    font-size: var(--font-h2);
+    color: #fff;
+}
+.popup-head .title-text > span + span {
+    position: relative;
+    margin-left: var(--space);
+    padding-left: var(--space)
+}
+.popup-head .title-text > span + span::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1px;
+    height: 14px;
+    background-color: #fff;
+    opacity: 0.5;
+    transform: translateY(-50%);
+}
+.popup-head .title-text .part {
+    font-weight: 700;
+    color: var(--primary);
+}
+.popup-head .btn-close {
+    position: absolute;
+    top: 50%;
+    right: var(--space);
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    background-image: url(../images/icon/close.svg);
+    background-size: 20px 20px;
+    border: 0;
+}
+.popup-content .popup-body {
+    padding: var(--space);
+}
+
+/* ================================================== */
+/* 프린트 */
+/* ================================================== */

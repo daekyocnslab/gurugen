@@ -1,3 +1,4 @@
+import click
 from flask import Flask
 from app.routes.main_routes import main_routes
 
@@ -7,5 +8,13 @@ app = Flask(__name__, template_folder="app/templates", static_folder="app/static
 # 블루프린트 등록
 app.register_blueprint(main_routes)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+@click.command()
+@click.option("--host", default="127.0.0.1", help="Host to bind to")
+@click.option("--port", default=5000, help="Port to bind to")
+def runserver(host, port):
+    """Run the Flask application."""
+    app.run(host=host, port=port)
+
+if __name__ == "__main__":
+    runserver()
+

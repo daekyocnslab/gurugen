@@ -12,6 +12,22 @@ input, select, textarea, button {
     background-color: #fff;
     border: 1px solid var(--form-border);
 }
+input::-webkit-input-placeholder {
+    color: #9B9FA0;
+    font-weight: 400;
+}
+input::-moz-placeholder {
+    color: #9B9FA0;
+    font-weight: 400;
+}
+input:-ms-input-placeholder {
+    color: #9B9FA0;
+    font-weight: 400;
+}
+input::-ms-input-placeholder {
+    color: #9B9FA0;
+    font-weight: 400;
+}
 input::placeholder {
     color: #9B9FA0;
     font-weight: 400;
@@ -21,11 +37,31 @@ input::placeholder {
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
-    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    -webkit-transition: color .15s var(--easing), 
+                background-color .15s var(--easing), 
+                border-color .15s var(--easing), 
+                -webkit-box-shadow .15s var(--easing);
+    transition: color .15s var(--easing), 
+                background-color .15s var(--easing), 
+                border-color .15s var(--easing), 
+                -webkit-box-shadow .15s var(--easing);
+    -o-transition: color .15s var(--easing), 
+                background-color .15s var(--easing), 
+                border-color .15s var(--easing), 
+                box-shadow .15s var(--easing);
     transition: color .15s var(--easing), 
                 background-color .15s var(--easing), 
                 border-color .15s var(--easing), 
                 box-shadow .15s var(--easing);
+    transition: color .15s var(--easing), 
+                background-color .15s var(--easing), 
+                border-color .15s var(--easing), 
+                box-shadow .15s var(--easing), 
+                -webkit-box-shadow .15s var(--easing);
     cursor: pointer;
 }
 .btn.icon {
@@ -57,35 +93,60 @@ input::placeholder {
 }
 #wrap {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     background-color: #F4F6F6;
     min-height: 100svh;
     max-height: 100svh;
     overflow: hidden;
 }
+.primary {
+    color: var(--primary);
+}
+.text-center {
+    text-align: center !important;
+}
+.text-right {
+    text-align: right !important;
+}
 
 /* ================================================== */
 /* 사이드 메뉴 */
 /* ================================================== */
 #sideMenu {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    flex: 0 0 340px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 340px;
+            flex: 0 0 340px;
     min-width: 340px;
     max-height: 100svh;
     background-color: #fff;
     padding: var(--space);
 }
 #sideMenu > .fixed-section {
-    flex: 0 0 auto;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
 }
 #sideMenu > .result-section {
-    flex: 1;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 #sideMenu .logo {
     text-align: center;
     padding: 0 0 var(--space);
-    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 .datepicker-section .title {
     padding: 0.5em;
@@ -102,7 +163,10 @@ input::placeholder {
     width: 100%;
     padding: 0 5px;
     border: 1px solid #DDDDDD;
-    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 #datepickerDent .ui-datepicker-header {
     margin-left: -5px;
@@ -111,7 +175,9 @@ input::placeholder {
 #datepickerDent .ui-datepicker select.ui-datepicker-month, 
 #datepickerDent .ui-datepicker select.ui-datepicker-year {
     width: auto;
-    appearance: none; 
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none; 
     background-color: transparent;
     background-image: url('../images/icon/select-arrow.svg'); 
     background-repeat: no-repeat;
@@ -177,8 +243,12 @@ input::placeholder {
     border-top: 1px solid var(--form-border)
 }
 .result-item .accord-head {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     padding: 12px 20px;
     font-weight: 500;
     cursor: pointer;
@@ -195,10 +265,14 @@ input::placeholder {
 .result-item .accord-body {
     max-height: 0;
     overflow: hidden;
+    -webkit-transition: max-height 0.3s var(--easing);
+    -o-transition: max-height 0.3s var(--easing);
     transition: max-height 0.3s var(--easing);
 }
 .accord-item.active .accord-head .icon {
-    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
 }
 .accord-item.active .accord-body {
     max-height: 200px; 
@@ -221,7 +295,9 @@ input::placeholder {
 /* 메인 컨텐츠 */
 /* ================================================== */
 #content {
-    flex: 1;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
     padding: 80px var(--space2) var(--space2);
     overflow: auto;
 }
@@ -232,8 +308,12 @@ input::placeholder {
     margin: 0 auto;
 }
 .top-handle-menu {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 10px;
     position: absolute;
     top: -50px;
@@ -260,15 +340,26 @@ input::placeholder {
     padding: var(--space2);
 }
 .summary-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     gap: var(--space);
 }
 .summary-list > li {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
     height: 100px;
     background-color: #FCE7DA;
     border-radius: var(--radius);
@@ -293,15 +384,18 @@ input::placeholder {
     border-bottom: 4px solid var(--primary);
 }
 .table {
+    --table-border: 1px solid var(--form-border);
+
+
     table-layout: fixed;
     width: 100%;
     background-color: #fff;
-    border-top: 1px solid var(--form-border);
+    border-top: var(--table-border);
 }
 .table th, .table td {
     padding: 7.5px;
-    border-bottom: 1px solid var(--form-border);
-    border-right: 1px solid var(--form-border);
+    border-bottom: var(--table-border);
+    border-right: var(--table-border);
     text-align: center;
 }
 .table th:last-child,
@@ -421,9 +515,15 @@ input::placeholder {
     display: block;
 }
 .popup-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     height: 100%;
 }
 .popup-content {
@@ -453,7 +553,9 @@ input::placeholder {
     height: 14px;
     background-color: #fff;
     opacity: 0.5;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 .popup-head .title-text .part {
     font-weight: 700;
@@ -465,7 +567,9 @@ input::placeholder {
     right: var(--space);
     width: 40px;
     height: 40px;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
     background-color: transparent;
     background-image: url(../images/icon/close.svg);
     background-size: 20px 20px;
@@ -478,3 +582,259 @@ input::placeholder {
 /* ================================================== */
 /* 프린트 */
 /* ================================================== */
+.print-content {
+    display: none;
+}
+.print-img-download {
+    opacity: 0;
+    background: url(../images/icon/print.png) no-repeat center / 90px 78px;
+}
+/* A4 크기를 지정 (210mm x 297mm) */
+@page {
+    size: A4; 
+    margin: 10mm 5mm 0; 
+}
+@media print {
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html, body {
+        width: 210mm; 
+        height: 297mm;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        color: var(--font-color);
+    }
+    #wrap, .no-print {
+        display: none;
+    }
+    .print-content {
+        --form-bg: #EBEBEB;
+
+        display: block;
+        position: relative;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+    .print-wrap .print-title {
+        font-weight: 700;
+        font-size: var(--font-h1);
+        text-align: center;
+    }
+    .print-wrap .logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 90px;
+        height: 54px;
+        background: url(../images/icon/print.png) no-repeat 0px -23px / 90px 78px;
+    }
+    .print-wrap .total-box {
+        margin-top: 60px;
+    }
+    .print-wrap .total-box .table th {
+        background-color: #D9D9D9;
+    }
+    .print-wrap .container {
+        max-width: 708px;
+        margin: 0 auto;
+        font-size: 12px;
+    }
+    .print-wrap .vehicle-wrap {
+        --table-width: 134px;
+    
+        height: 400px;
+        margin-top: 40px;
+        padding: 70px calc(var(--table-width) + 50px) 0;
+    }
+    .print-wrap .vehicle-wrap > .title {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+                transform: translateX(-50%);
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        gap: 3px;
+        padding: 0 10px 5px;
+        border-bottom: 3px solid #7E7E7E;
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .icon-vehicle {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        background: url(../images/icon/print.png) no-repeat -1px 1px / 90px 78px;
+    }
+    .print-wrap .dent-table-box > .title {
+        width: 100%;
+        background: none;
+        padding: 0 0 6px;
+        font-size: 12px;
+        color: var(--font-color);
+    }
+    .print-wrap .dent-table-box > .title::after {
+        top: 3px;
+        width: 17px;
+        height: 15px;
+        background: url(../images/icon/print.png) no-repeat -26px -4px / 90px 78px;
+        border: 0;
+    }
+    .print-wrap .dent-table-box.A > .title, 
+    .print-wrap .dent-table-box.B > .title {
+        text-align: right;
+        padding-right: 20px;
+    }
+    .print-wrap .dent-table-box.A > .title::after, 
+    .print-wrap .dent-table-box.B > .title::after {
+        right: 0px;
+    }
+    .print-wrap .dent-table-box.C > .title, 
+    .print-wrap .dent-table-box.D > .title {
+        text-align: left;
+        padding-left: 20px;
+    }
+    .print-wrap .dent-table-box.C > .title::after, 
+    .print-wrap .dent-table-box.D > .title::after {
+        left: 0px;
+        -webkit-transform: rotate(-180deg);
+            -ms-transform: rotate(-180deg);
+                transform: rotate(-180deg)
+    }
+    .table-round {
+        border: 1px solid rgba(11, 13, 17, 0.2);
+        border-radius: var(--radius);
+        overflow: hidden;
+    }
+    .print-wrap .table {
+        --table-border: 1px solid rgba(11, 13, 17, 0.2);
+    }
+    .table-round .table {
+        border-top: 0;
+    }
+    .table-round .table tr:last-child th,
+    .table-round .table tr:last-child td {
+        border-bottom: 0;
+    }
+    .table.table-dashed th, .table.table-dashed td {
+        border-style: dashed;
+    }
+    .table.table-dashed th {
+        border-right: 0;
+        background-color: #EBEBEB;
+    }
+    .table.table-dashed thead th + th {
+        position: relative;
+    }
+    .table.table-dashed thead th + th::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -1px;
+        width: 1px;
+        height: 13px;
+        background-color: rgba(11, 13, 17, 0.2);
+        -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+    }
+    .print-wrap .dent-table-box .table th, 
+    .print-wrap .dent-table-box .table td {
+        padding: 7px 5.5px;
+    }
+    .print-wrap .dent-table-box.A,
+    .print-wrap .dent-table-box.C {
+        top: 60px;
+    }
+    .print-wrap .dent-table-box.B,
+    .print-wrap .dent-table-box.D {
+        bottom: 0px;
+    }
+    .title-square {
+        position: relative;
+        padding-left: 1.2em;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .title-square::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        width: 6px;
+        height: 6px;
+        background-color: currentColor;
+        -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+    }
+    .print-wrap .dent-total,
+    .print-wrap .other-matter {
+        margin-top: 30px;
+    }
+    .other-matter .table-round {
+        height: 80px;
+    }
+    .sign-form {
+        margin-top: 40px;
+        font-size: 12px;
+    }
+    .sign-form .title {
+        position: relative;
+        padding-left: 1.5em;
+        margin-bottom: 6px;
+        font-weight: 500;
+    }
+    .sign-form .title::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        width: 1.5em;
+        height: 1.5em;
+        background: url(../images/icon/print.png) no-repeat -49px -1px / 90px 78px;
+        -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+    }
+    .sign-form ul {
+        padding-left: 1.5em;
+        font-size: 0.9em;
+        line-height: 1.6;
+    }
+    .sign-form .sign-box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        margin-top: 40px;
+        padding-bottom: 1em;
+        border-bottom: 1px solid rgba(11, 13, 17, 0.2);
+    }
+    .sign-form .sign-box > span {
+        -webkit-box-flex: 1;
+            -ms-flex: 1 1 33.333%;
+                flex: 1 1 33.333%;
+        text-align: center;
+    }
+    .sign-form .sign-box > .text-right {
+        padding-right: 4em;
+    }
+    .sign-form .sign-box .__date > span {
+        display: inline-block;
+        padding-left: 0.7em;
+        padding-right: 0.5em;
+    }
+}

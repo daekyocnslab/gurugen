@@ -5,229 +5,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>차량 Dent 분석 결과</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 2vh 2vw;
-            font-size: 1vw; /* 기본 폰트 크기 설정 */
-        }
-        .container {
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-        .title {
-            text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 1em;
-            font-weight: bold;
-        }
-        .logo {
-            float: right;
-            width: 6vw;
-            margin-top: -3vw;
-        }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1vh;
-        }
-        .table th, .table td {
-            border: 1px solid black;
-            padding: 0.5vh 0.5vw;
-            text-align: center;
-        }
-        .table th {
-            background-color: #f2f2f2;
-        }
-        .section-title {
-            text-align: center;
-            margin: 1vh 0;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-        .car-diagram img {
-            width: 20vw;
-        }
-        .grid {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1vh;
-        }
-        .grid-item {
-            width: 48%;
-        }
-        #agreement {
-            width: 100%;
-            margin-top: 2vh;
-        }
-        #agreement table {
-            width: 100%;
-            border: 1px solid black;
-            border-collapse: collapse;
-            margin-top: 1vh;
-        }
-        #agreement th, #agreement td {
-            border: 1px solid black;
-            padding: 0.5vh 0.5vw;
-            font-size: 0.9em;
-            text-align: left;
-        }
-        #agreement ul {
-            padding-left: 0;
-            list-style-position: inside;
-            font-size: 0.9em;
-        }
-        .flex-container {
-            display: flex;
-            justify-content: space-around;
-            font-size: 0.9em;
-        }
-        .flex-container > div {
-            text-align: center;
-            width: 5vw;
-        }
-        .flex-container > .signature {
-            width: 15vw;
-            text-align: right;
-        }
-
-        /* 미디어 쿼리: 화면이 작아질 때 자동으로 조정 */
-        @media print {
-            body, .container {
-                padding: 1vh 1vw;
-                font-size: 0.9vw;
-            }
-            .logo {
-                width: 5vw;
-                margin-top: -2vw;
-            }
-            .car-diagram img {
-                width: 15vw;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <div class="title">차량 Dent 분석 결과</div>
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Renault Logo" class="logo">
-
-        <!-- Main Information Table -->
-        <table class="table">
-            <tr>
-                <th>차량번호</th>
-                <th>고객명</th>
-                <th>차종</th>
-            </tr>
-            <tr>
-                <td>{{ report.car_number }}</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>입차일시</th>
-                <th>연락처</th>
-                <th>색상</th>
-            </tr>
-            <tr>
-                <td>{{ report.data_time }}</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>분석일시</th>
-                <td colspan="2">{{ report.analyze_time }}</td>
-            </tr>
-        </table>
-
-        <!-- Section Title -->
-        <div class="section-title">분석 결과</div>
-
-        <!-- Bonnet Table -->
-        <table class="table">
-            <tr>
-                <th>구분</th>
-                <th>소 (1~2)</th>
-                <th>중 (2~4)</th>
-                <th>대 (4~6)</th>
-                <th>스크래치</th>
-                <th>데미지</th>
-            </tr>
-            <tr>
-                <td>본넷</td>
-                <td>{{ report.front_dent_small }}</td>
-                <td>{{ report.front_dent_medium }}</td>
-                <td>{{ report.front_dent_large }}</td>
-                <td>{{ report.front_scratch }}</td>
-                <td>{{ report.front_damage }}</td>
-            </tr>
-        </table>
-
-        <!-- Car Diagram and Left/Right Tables -->
-        <div class="grid">
-            <div class="grid-item">
-                <table class="table">
-                    <tr>
-                        <th>LH</th>
-                        <th>수량</th>
-                    </tr>
-                    <tr>
-                        <td>소 (1~2)</td>
-                        <td>{{ report.left_dent_small }}</td>
-                    </tr>
-                    <tr>
-                        <td>중 (2~4)</td>
-                        <td>{{ report.left_dent_medium }}</td>
-                    </tr>
-                    <tr>
-                        <td>대 (4~6)</td>
-                        <td>{{ report.left_dent_large }}</td>
-                    </tr>
-                    <tr>
-                        <td>스크래치</td>
-                        <td>{{ report.left_scratch }}</td>
-                    </tr>
-                    <tr>
-                        <td>데미지</td>
-                        <td>{{ report.left_damage }}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="car-diagram">
-                <img src="{{ url_for('static', filename='car-diagram.png') }}" alt="Car Diagram">
-            </div>
-
-            <div class="grid-item">
-                <table class="table">
-                    <tr>
-                        <th>RH</th>
-                        <th>수량</th>
-                    </tr>
-                    <tr>
-                        <td>소 (1~2)</td>
-                        <td>{{ report.right_dent_small }}</td>
-                    </tr>
-                    <tr>
-                        <td>중 (2~4)</td>
-                        <td>{{ report.right_dent_medium }}</td>
-                    </tr>
-                    <tr>
-                        <td>대 (4~6)</td>
-                        <td>{{ report.right_dent_large }}</td>
-                    </tr>
-                    <tr>
-                        <td>스크래치</td>
-                        <td>{{ report.right_scratch }}</td>
-                    </tr>
-                    <tr>
-                        <td>데미지</td>
-                        <td>{{ report.right_damage }}</td>
-                    </tr>
-                </table>
-            </div>
+       <div class="main-pannel">
+                    <h3 class="pannel-title">차향 덴트 분석 결과</h3>
+                    <div class="pannel-content">
+                        <ul class="summary-list">
+                            <li class="summary-item">
+                                <dl>
+                                    <dt>차량 번호</dt>
+                                    <dd>111가 1234</dd>
+                                </dl>
+                            </li>
+                            <li class="summary-item">
+                                <dl>
+                                    <dt>입차 일시</dt>
+                                    <dd>2024.10.21 / 15:00:30</dd>
+                                </dl>
+                            </li>
+                            <li class="summary-item">
+                                <dl>
+                                    <dt>분석 일시</dt>
+                                    <dd>2024.10.21 / 15:01:30</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <div class="dent-total">
+                            <h4 class="title">전체 덴트 수량</h4>
+                            <table class="table">
+                                <colgroup>
+                                    <col width="25%">
+                                    <col width="25%">
+                                    <col width="25%">
+                                    <col width="25%">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>구분</th>
+                                        <td>덴트</td>
+                                        <td>스크래치</td>
+                                        <td>데미지</td>
+                                    </tr>
+                                    <tr>
+                                        <th>수량</th>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <article class="vehicle-wrap">
+                            <div class="__vehicle-bg"></div>
+                            <div class="dent-table-box A">
+                                <h4 class="title">A 좌측</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>구분</th>
+                                            <th>수량</th>
+                                        </tr>
+                                        <tr>
+                                            <td>덴트</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>스크래치</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>데미지</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="dent-table-box B">
+                                <h4 class="title">B 본넷</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>구분</th>
+                                            <th>수량</th>
+                                        </tr>
+                                        <tr>
+                                            <td>덴트</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>스크래치</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>데미지</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="dent-table-box C">
+                                <h4 class="title">C 우측</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>구분</th>
+                                            <th>수량</th>
+                                        </tr>
+                                        <tr>
+                                            <td>덴트</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>스크래치</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>데미지</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="dent-table-box D">
+                                <h4 class="title">D 트렁크(테일 게이트)</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>구분</th>
+                                            <th>수량</th>
+                                        </tr>
+                                        <tr>
+                                            <td>덴트</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>스크래치</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>데미지</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </div>
         </div>
 
         <!-- Agreement Section -->

@@ -44,10 +44,10 @@
         <div class="__inner">
             <!-- 상단 버튼 -->
             <ul class="top-handle-menu">
-<!--                <li>-->
-<!--                    &lt;!&ndash; 결과 다운로드 버튼 &ndash;&gt;-->
-<!--                    <button id="downloadResult" class="btn icon download" title="파일 저장"></button>-->
-<!--                </li>-->
+                <!--                <li>-->
+                <!--                    &lt;!&ndash; 결과 다운로드 버튼 &ndash;&gt;-->
+                <!--                    <button id="downloadResult" class="btn icon download" title="파일 저장"></button>-->
+                <!--                </li>-->
                 <li>
                     <!-- 결과 인쇄 버튼 -->
                     <button id="printResult" class="btn icon print" title="인쇄"></button>
@@ -210,12 +210,14 @@
     </main>
 </div>
 
-<!-- Popup -->
-<div id="vehicleVideoPop" class="popup-wrap">
+<!-- VideoPop -->
+<article id="vehicleVideoPop" class="popup-wrap">
     <div class="popup-container">
         <div class="popup-content">
             <div class="popup-head">
-                <p class="title-text">데이터가 없습니다.</p>
+                <p class="title-text">
+                    데이터가 없습니다.
+                </p>
                 <button type="button" class="btn icon btn-close" title="닫기"></button>
             </div>
             <div class="popup-body">
@@ -225,7 +227,208 @@
             </div>
         </div>
     </div>
-</div>
+</article>
+<!-- PrintView -->
+<article id="printView" class="print-wrap">
+    <div class="print-img-download no-print"></div>
+    <div class="print-content">
+        <h1 class="logo"></h1>
+        <h2 class="print-title">차량 덴트 분석 결과</h2>
+        <div class="total-box">
+            <table class="table">
+                <colgroup>
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="auto">
+                    <col width="auto">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>차량번호</th>
+                    <th>차종</th>
+                    <th>고객명</th>
+                    <th>입차 일시</th>
+                    <th>분석 일시</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>111가 123</td>
+                    <td>SQ5</td>
+                    <td>홍길동</td>
+                    <td>2024.10.21 / 15:00:30</td>
+                    <td>2024.10.21 / 15:01:30</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <div class="vehicle-wrap">
+                <h3 class="title"><span class="icon-vehicle"></span>분석 결과</h3>
+                <div class="__vehicle-bg"></div>
+                <div class="dent-table-box A">
+                    <h4 class="title">A 좌측 <span class="icon-arrow"></span></h4>
+                    <div class="table-round">
+                        <table class="table table-dashed">
+                            <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>수량</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>덴트</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>스크래치</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>데미지</td>
+                                <td>1</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dent-table-box B">
+                    <h4 class="title">B 본넷 <span class="icon-arrow"></span></h4>
+                    <div class="table-round">
+                        <table class="table table-dashed">
+                            <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>수량</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>덴트</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>스크래치</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>데미지</td>
+                                <td>1</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dent-table-box C">
+                    <h4 class="title"><span class="icon-arrow"></span> C 우측</h4>
+                    <div class="table-round">
+                        <table class="table table-dashed">
+                            <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>수량</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>덴트</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>스크래치</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>데미지</td>
+                                <td>1</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dent-table-box D">
+                    <h4 class="title"><span class="icon-arrow"></span> D 트렁크<small>(테일 게이트)</small></h4>
+                    <div class="table-round">
+                        <table class="table table-dashed">
+                            <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>수량</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>덴트</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>스크래치</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>데미지</td>
+                                <td>1</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="dent-total">
+                <h4 class="title-square primary">전체 덴트 수량</h4>
+                <div class="table-round">
+                    <table class="table table-dashed">
+                        <colgroup>
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="25%">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th>구분</th>
+                            <td>덴트</td>
+                            <td>스크래치</td>
+                            <td>데미지</td>
+                        </tr>
+                        <tr>
+                            <th>수량</th>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="other-matter">
+                <h4 class="title-square">기타 사항</h4>
+                <div class="table-round"></div>
+            </div>
+        </div>
+        <div class="sign-form">
+            <div class="container">
+                <h5 class="title">차량 외관의 덴트 분석을 위한 영상 촬영에 동의합니다.</h5>
+                <ul>
+                    <li>• 본 영상은 차량의 덴트분석용으로만 사용됩니다.</li>
+                    <li>• 본 영상은 사업소 내에서만 이용합니다.</li>
+                    <li>• 본 영상의 최대 보간 기간은 30일이며, 이후 영구 삭제됩니다.</li>
+                </ul>
+            </div>
+            <div class="sign-box">
+                    <span class="__date">
+                        <span>2024</span>년
+                        <span>10</span>월
+                        <span>21</span>일
+                    </span>
+                <span>의뢰인(성명 및 서명)</span>
+                <span class="text-right">(인)</span>
+            </div>
+        </div>
+    </div>
+</article>
 
 <script type="module">
     import Accordion from '../static/js/Accordion.js';
@@ -237,6 +440,17 @@
     function initialize() {
         setupDatePicker(); // DatePicker 초기화
         setupEventListeners(); // 이벤트 리스너 등록
+
+        // 오늘 날짜 설정
+        const today = new Date();
+        $("#datepickerDent").datepicker("setDate", today);
+
+        // 오늘 날짜로 텍스트 및 데이터 설정
+        const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
+        $(".search-section p").text(`${formattedDate} 총 분석 차량 수`);
+
+        // 오늘 날짜로 보고서 필터링
+        filterReports(formattedDate);
     }
 
     // DatePicker 설정
@@ -245,9 +459,23 @@
             dateFormat: 'yy-mm-dd',
             showMonthAfterYear: true,
             monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
             changeMonth: true,
             changeYear: true,
-            onSelect: filterReports // 날짜 선택 시 필터링
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            onChangeMonthYear: function (year, month, inst) {
+                setTimeout(() => {
+                    addYearSuffix();
+                }, 0);
+            },
+            onSelect: ((dateText) => {
+                // 날짜 텍스트를 업데이트
+                $(".search-section p").text(`${dateText} 총 분석 차량 수`);
+
+                // 선택된 날짜로 보고서를 필터링
+                filterReports();
+            })
         });
         addYearSuffix(); // '년' 텍스트 추가
     }
@@ -263,7 +491,11 @@
     // 이벤트 리스너 설정
     function setupEventListeners() {
         document.querySelector("#resultAccordion").addEventListener("click", handleAccordionClick);
-        document.querySelector("#printResult").addEventListener("click", printReport);
+
+        const $printBtn = document.querySelector('#printResult');
+        $printBtn.addEventListener('click', () => {
+            print();
+        })
     }
 
     // 아코디언 클릭 처리
@@ -309,16 +541,22 @@
     }
 
     // 보고서 필터링
-    function filterReports() {
-        const date = $("#datepickerDent").datepicker("getDate");
+    function filterReports(date = null) {
+        const selectedDate = date || formatDateTime($("#datepickerDent").datepicker("getDate"));
+        if (!selectedDate) return alert("유효하지 않은 날짜입니다.");
+
         const searchInput = $(".search-input").val().trim();
-        if (!date) return alert("유효하지 않은 날짜입니다.");
 
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-
-        fetch(`/filter_reports?date=${formattedDate}&car_number=${searchInput}`)
+        fetch(`/filter_reports?date=${selectedDate}&car_number=${searchInput}`)
             .then((response) => response.json())
-            .then(updateAccordion) // 아코디언 업데이트
+            .then((data) => {
+                updateAccordion(data); // 아코디언 업데이트
+
+                // 첫 번째 차량 정보 로드
+                if (data.length > 0) {
+                    loadReport(data[0].id); // 첫 번째 차량 ID로 로드
+                }
+            })
             .catch(console.error);
     }
 
@@ -369,7 +607,10 @@
     function loadReport(reportId) {
         fetch(`/report/${reportId}`)
             .then((response) => response.json())
-            .then(updateMainPanel) // 메인 패널 업데이트
+            .then((data) => {
+                updateMainPanel(data); // 메인 패널 업데이트
+                updatePrintView(data); // 프린트 뷰 업데이트
+            })
             .catch(console.error);
     }
 
@@ -399,6 +640,170 @@
             </article>`;
     }
 
+    // 프린트 화면 업데이트
+    function updatePrintView(data) {
+        const printView = document.querySelector("#printView .print-content");
+
+        // 차량 기본 정보 테이블
+        const vehicleInfo = `
+        <div class="total-box">
+            <table class="table">
+                <colgroup>
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="auto">
+                    <col width="auto">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>차량번호</th>
+                        <th>차종</th>
+                        <th>고객명</th>
+                        <th>입차 일시</th>
+                        <th>분석 일시</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>${data.car_number || ""}</td>
+                        <td>${data.car_type || ""}</td>
+                        <td>${data.customer_name || ""}</td>
+                        <td>${formatDateTime(data.data_time)}</td>
+                        <td>${formatDateTime(data.analyze_time)}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    `;
+
+        // 각 위치별 덴트 결과 테이블
+        const sectionNames = {
+            A: "A 좌측",
+            B: "B 본넷",
+            C: "C 우측",
+            D: "D 트렁크(테일 게이트)"
+        };
+
+        // 각 위치별 덴트 결과 테이블 생성
+        const dentTables = `
+            ${generatePrintDentTable('A', 'A 좌측', data.left_dent_total, data.left_scratch, data.left_damage)}
+            ${generatePrintDentTable('B', 'B 본넷', data.front_dent_total, data.front_scratch, data.front_damage)}
+            ${generatePrintDentTable('C', 'C 우측', data.right_dent_total, data.right_scratch, data.right_damage)}
+            ${generatePrintDentTable('D', 'D 트렁크(테일 게이트)', data.tail_dent_total, data.tail_scratch, data.tail_damage)}
+        `;
+
+        // 전체 덴트 수량 테이블
+        const totalDent = `
+        <div class="dent-total">
+            <h4 class="title-square primary">전체 덴트 수량</h4>
+            <div class="table-round">
+                <table class="table table-dashed">
+                    <colgroup>
+                        <col width="25%">
+                        <col width="25%">
+                        <col width="25%">
+                        <col width="25%">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>구분</th>
+                            <td>덴트</td>
+                            <td>스크래치</td>
+                            <td>데미지</td>
+                        </tr>
+                        <tr>
+                            <th>수량</th>
+                            <td>${data.total_dents || 0}</td>
+                            <td>${data.total_scratch || 0}</td>
+                            <td>${data.total_damage || 0}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+
+        // 기타 사항 및 서명 정보
+        const otherMatters = `
+        <div class="other-matter">
+            <h4 class="title-square">기타 사항</h4>
+            <div class="table-round">${data.other_matter || ""}</div>
+        </div>
+        `;
+
+        const signForm = `
+            <div class="sign-form">
+                <div class="container">
+                    <h5 class="title">차량 외관의 덴트 분석을 위한 영상 촬영에 동의합니다.</h5>
+                    <ul>
+                        <li>• 본 영상은 차량의 덴트분석용으로만 사용됩니다.</li>
+                        <li>• 본 영상은 사업소 내에서만 이용합니다.</li>
+                        <li>• 본 영상의 최대 보관 기간은 30일이며, 이후 영구 삭제됩니다.</li>
+                    </ul>
+                </div>
+                <div class="sign-box">
+                    <span class="__date">
+                        <span>${data.date_year || "연도"}</span>년
+                        <span>${data.date_month || "월"}</span>월
+                        <span>${data.date_day || "일"}</span>일
+                    </span>
+                    <span>의뢰인(성명 및 서명)</span>
+                    <span class="text-right">(인)</span>
+                </div>
+            </div>
+        `
+
+        // 최종적으로 업데이트
+        printView.innerHTML = `
+            <h1 class="logo"></h1>
+            <h2 class="print-title">차량 덴트 분석 결과</h2>
+            ${vehicleInfo}
+            <div class="container">
+                <div class="vehicle-wrap">
+                    <h3 class="title"><span class="icon-vehicle"></span>분석 결과</h3>
+                    <div class="__vehicle-bg"></div>
+                    ${dentTables}
+                </div>
+                ${totalDent}
+                ${otherMatters}
+             </div>
+            ${signForm}
+        `;
+    }
+
+    // 프린트 화면 덴트 테이블 생성 함수
+    function generatePrintDentTable(section, sectionName, dent, scratch, damage) {
+        return `
+            <div class="dent-table-box ${section}">
+                <h4 class="title">${sectionName} <span class="icon-arrow"></span></h4>
+                <div class="table-round">
+                    <table class="table table-dashed">
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>수량</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>덴트</td>
+                                <td>${dent || 0}</td>
+                            </tr>
+                            <tr>
+                                <td>스크래치</td>
+                                <td>${scratch || 0}</td>
+                            </tr>
+                            <tr>
+                                <td>데미지</td>
+                                <td>${damage || 0}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>`;
+    }
+
     // 날짜 및 시간 포맷
     function formatDateTime(dateTime) {
         const date = new Date(dateTime);
@@ -416,29 +821,29 @@
     // 덴트 테이블 생성 함수
     function generateDentTable(section, sectionName, dent, scratch, damage) {
         return `
-    <div class="dent-table-box ${section}">
-        <h4 class="title">${sectionName}</h4>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>구분</th>
-                    <th>수량</th>
-                </tr>
-                <tr>
-                    <td>덴트</td>
-                    <td>${dent || 0}</td>
-                </tr>
-                 <tr>
-                    <td>스크래치</td>
-                    <td>${scratch || 0}</td>
-                </tr>
-                <tr>
-                    <td>데미지</td>
-                    <td>${damage || 0}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>`;
+            <div class="dent-table-box ${section}">
+                <h4 class="title">${sectionName}</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>구분</th>
+                            <th>수량</th>
+                        </tr>
+                        <tr>
+                            <td>덴트</td>
+                            <td>${dent || 0}</td>
+                        </tr>
+                         <tr>
+                            <td>스크래치</td>
+                            <td>${scratch || 0}</td>
+                        </tr>
+                        <tr>
+                            <td>데미지</td>
+                            <td>${damage || 0}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>`;
     }
 
     //팝업 표시
@@ -446,16 +851,18 @@
 
         if (fileName) {
             // 비디오 태그의 src 업데이트
-            const popupContent = document.querySelector("#vehicleVideoPop .title-text");
-            popupContent.innerHTML = `<span class="date">${clickedPart.date}</span><span class="number">${clickedPart.number}</span><span class="part">${clickedPart.part}</span>`;
-            const videoElement = document.querySelector(".vehicle-video");
+            const $container = document.querySelector("#vehicleVideoPop .title-text");
+            if ($container) {
+                $container.innerHTML = `<span class="date">${clickedPart.date}</span><span class="number">${clickedPart.number}</span><span class="part">${clickedPart.part}</span>`;
+                const videoElement = document.querySelector(".vehicle-video");
 
-            // videoElement.src = `../static/video/${fileName}`; // 비디오 경로 설정
-            videoElement.src = `../static/video/test.webm`; // 비디오 경로 설정
+                // videoElement.src = `../static/video/${fileName}`; // 비디오 경로 설정
+                videoElement.src = `../static/video/test.webm`; // 비디오 경로 설정
 
-            // 팝업 열기
-            const popup = new Popup("#vehicleVideoPop");
-            popup.open();
+                // 팝업 열기
+                const popup = new Popup("#vehicleVideoPop");
+                popup.open();
+            }
         } else {
             console.error("파일 이름이 없습니다.");
         }

@@ -52,18 +52,31 @@ def filter_reports_by_date_and_car(date, car_number):
     """날짜와 차량 번호로 보고서를 필터링"""
     with get_connection() as connection:
         with connection.cursor() as cursor:
-            query = "SELECT * FROM car_dent_analysis WHERE DATE(analyze_time) = %s"
+            # 기본 쿼리
+            query = """
+            SELECT * 
+            FROM car_dent_analysis 
+            WHERE DATE(analyze_time) = %s
+            """
             params = [date]
+
+            # 차량 번호 조건 추가
             if car_number:
-                query += " AND car_number = %s"
-                params.append(car_number)
+                query += " AND car_number LIKE %s"
+                params.append(f"%{car_number}%")
+
+            # 정렬 추가
+            query += " ORDER BY analyze_time DESC"
+
+            # 쿼리 실행
             cursor.execute(query, params)
             filtered_reports = cursor.fetchall()
 
+    # 총 덴트 수 계산 및 추가
     for report in filtered_reports:
         report['total_dents'] = calculate_total_dents(report)
-    return filtered_reports
 
+    return filtered_reports
 
 def insert_report(data):
     """새로운 보고서 데이터를 삽입"""

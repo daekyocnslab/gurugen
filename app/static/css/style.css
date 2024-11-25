@@ -4,10 +4,25 @@
 @import url(./variable.css);
 @import url(./reset.css);
 @import url(./main.css);
+/* A4 크기를 지정 (210mm x 297mm) */
+@page {
+    size: A4;
+    margin: 0; <<<<<<<
+    /* margin: 10mm 5mm 0;  */
+}
 @media print {
-    .print-show { display:block;}
-    .print-hide {display:none;}
-    @page {margin:1.3cm 1.3cm}
-    @page :first {margin:0 1.3cm}
-    html {margin:1.3cm 0;}
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    html, body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        padding: 10mm 5mm 0;    <<<<<<<<
+        color: var(--font-color);
+    }
 }

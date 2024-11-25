@@ -16,12 +16,21 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 ## 프로젝트 구조
 
 ```plaintext
-├── README.md           - GURUGEN DENT 자동분석 시스템의 개요와 설정 방법을 설명합니다.
-├── app                 - 웹 애플리케이션의 주요 로직이 포함된 디렉토리입니다.
-├── .env                - 환경 변수 파일로, 중요한 설정 정보를 저장합니다.
-├── .gitignore          - Git에 포함되지 않을 파일 목록을 지정합니다.
-├── requirements.txt    - 프로젝트 실행에 필요한 Python 라이브러리 목록입니다.
-└── webapp.py           - 웹 애플리케이션의 메인 실행 파일입니다.
+├── db                  - Database 접속 및 쿼리 모음
+├── route               - 페이지 라우팅 정의
+├── static       
+├──  css
+ ├──  font
+ ├──  image
+ ├──  js
+ ├──  vendor
+ ├──  video
+├──  templates         
+├── README.md           - GURUGEN DENT 자동분석 시스템의 개요와 설정 방법
+├── .env                - 환경 변수 파일로, 중요한 설정 정보
+├── .gitignore          - Git에 포함되지 않을 파일 목록을 지정
+├── requirements.txt    - 프로젝트 실행에 필요한 Python 라이브러리 목록
+└── webapp.py           - 웹 애플리케이션의 메인 실행 파일
 ```
 
 
@@ -30,7 +39,9 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 
 GURUGEN DENT 프로젝트는 **Python 3.9.18** 버전을 권장합니다. 프로젝트 호환성을 위해 해당 버전으로 가상 환경을 설정하시길 권장합니다. 
 
-
+## 주요 설정 
+env 환경설정
+db 설정 및 비디오 폴더 위치 설정
 
 
 ## 환경 설정 및 실행 방법

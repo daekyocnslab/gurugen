@@ -168,6 +168,11 @@ input::placeholder {
         -ms-user-select: none;
             user-select: none;
 }
+.ui-datepicker .ui-state-highlight.ui-state-active {
+    background: #ff9900 !important; /* 선택된 오늘 날짜 배경색 */
+    border-radius: 50% !important;
+    color: #fff !important;
+}
 #datepickerDent .ui-datepicker-header {
     margin-left: -5px;
     margin-right: -5px;

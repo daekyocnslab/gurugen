@@ -12,6 +12,7 @@
     <script src="../static/vendor/jquery-ui-datepicker/jquery-ui.min.js"></script>
 </head>
 <body>
+<!-- 메인 페이지 -->
 <div id="wrap">
     <!-- Sidebar -->
     <div id="sideMenu">
@@ -219,20 +220,16 @@
     <div class="popup-container">
         <div class="popup-content">
             <div class="popup-head">
-                <p class="title-text">
-                    데이터가 없습니다.
-                </p>
+                <p class="title-text">데이터가 없습니다.</p>
                 <button type="button" class="btn icon btn-close" title="닫기"></button>
             </div>
-            <div class="popup-body">
-                <video class="vehicle-video" controls src="../static/video/2024-11-11-12-44-29_cam1.webm"
-                       type="video/webm">
-                    동영상을 지원하지 않는 브라우저입니다.
-                </video>
+             <div class="popup-body">
+                <video class="vehicle-video" controls src="" type="video/webm">동영상을 지원하지 않는 브라우저입니다.</video>
             </div>
         </div>
     </div>
 </article>
+
 <!-- PrintView -->
 <article id="printView" class="print-wrap">
     <div class="print-img-download no-print"></div>
@@ -435,6 +432,7 @@
     </div>
 </article>
 
+<!-- Module -->
 <script type="module">
     import Accordion from '../static/js/Accordion.js';
     import Popup from '../static/js/Popup.js';
@@ -445,17 +443,7 @@
     function initialize() {
         setupDatePicker(); // DatePicker 초기화
         setupEventListeners(); // 이벤트 리스너 등록
-
-        // 오늘 날짜 설정
-        const today = new Date();
-        $("#datepickerDent").datepicker("setDate", today);
-
-        // 오늘 날짜로 텍스트 및 데이터 설정
-        const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
-        $(".search-section p").text(`${formattedDate} 총 분석 차량 수`);
-
-        // 오늘 날짜로 보고서 필터링
-        filterReports(formattedDate);
+        setTodayAsDefault();//오늘의 데이터 초기화
     }
 
     // DatePicker 설정
@@ -493,6 +481,37 @@
         });
     }
 
+    // 이벤트 리스너 추가
+    function setupEventListeners() {
+        document.querySelector("#resultAccordion").addEventListener("click", handleAccordionClick);
+
+        // 캠 리스트에서 클릭 이벤트 처리
+        const partLists = document.querySelectorAll(".parts-list li");
+        partLists.forEach(part => {
+            part.addEventListener("click", handleVideoClick);
+        });
+
+        // 선택된 보고서 출력 이벤트 처리
+        const $printBtn = document.querySelector('#printResult');
+        $printBtn.addEventListener('click', () => {
+            print();
+        })
+    }
+
+    //오늘의 데이터 초기화
+    function setTodayAsDefault() {
+        // 오늘 날짜 설정
+        const today = new Date();
+        $("#datepickerDent").datepicker("setDate", today);
+
+        // 오늘 날짜로 텍스트 및 데이터 설정
+        const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
+        $(".search-section p").text(`${formattedDate} 총 분석 차량 수`);
+
+        // 오늘 날짜로 보고서 필터링
+        filterReports(formattedDate);
+    }
+
     // 아코디언 클릭 처리
     async function handleAccordionClick(event) {
         const target = event.target;
@@ -524,7 +543,7 @@
                 return;
             }
 
-           try {
+            try {
                 // 차량 데이터를 가져오기
                 const response = await fetch(`/report/${vehicleId}`);
                 if (!response.ok) {
@@ -542,7 +561,8 @@
                 console.error("Error fetching vehicle data:", error);
             }
 
-           if (!fileNameBase) {
+            // 파일 이름 확인
+            if (!fileNameBase) {
                 console.error("파일 이름이 없습니다.");
                 return;
             }
@@ -698,6 +718,34 @@
                 ${generateDentTable('C', 'C 우측', data.right_dent_total, data.right_scratch, data.right_damage)}
                 ${generateDentTable('D', 'D 트렁크(테일 게이트)', data.tail_dent_total, data.tail_scratch, data.tail_damage)}
             </article>`;
+    }
+
+    // 덴트 테이블 생성 함수
+    function generateDentTable(section, sectionName, dent, scratch, damage) {
+        return `
+            <div class="dent-table-box ${section}">
+                <h4 class="title">${sectionName}</h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>구분</th>
+                            <th>수량</th>
+                        </tr>
+                        <tr>
+                            <td>덴트</td>
+                            <td>${dent || 0}</td>
+                        </tr>
+                         <tr>
+                            <td>스크래치</td>
+                            <td>${scratch || 0}</td>
+                        </tr>
+                        <tr>
+                            <td>데미지</td>
+                            <td>${damage || 0}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>`;
     }
 
     // 프린트 화면 업데이트
@@ -868,42 +916,6 @@
         return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")} / ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
     }
 
-    // 선택된 보고서 출력
-    function printReport() {
-        const $printBtn = document.querySelector('#printResult');
-        $printBtn.addEventListener('click', () => {
-            print();
-        })
-    }
-
-    // 덴트 테이블 생성 함수
-    function generateDentTable(section, sectionName, dent, scratch, damage) {
-        return `
-            <div class="dent-table-box ${section}">
-                <h4 class="title">${sectionName}</h4>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>구분</th>
-                            <th>수량</th>
-                        </tr>
-                        <tr>
-                            <td>덴트</td>
-                            <td>${dent || 0}</td>
-                        </tr>
-                         <tr>
-                            <td>스크래치</td>
-                            <td>${scratch || 0}</td>
-                        </tr>
-                        <tr>
-                            <td>데미지</td>
-                            <td>${damage || 0}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`;
-    }
-
     // 캠 리스트 클릭 시 동영상 팝업 처리
     async function handleVideoClick(event) {
         const clickedPart = event.target.closest("li");
@@ -960,22 +972,6 @@
         } else {
             console.error("팝업 컨테이너나 비디오 요소를 찾을 수 없습니다.");
         }
-    }
-
-    // 이벤트 리스너 추가
-    function setupEventListeners() {
-        document.querySelector("#resultAccordion").addEventListener("click", handleAccordionClick);
-
-        // 캠 리스트에서 클릭 이벤트 처리
-        const partLists = document.querySelectorAll(".parts-list li");
-        partLists.forEach(part => {
-            part.addEventListener("click", handleVideoClick);
-        });
-
-        const $printBtn = document.querySelector('#printResult');
-        $printBtn.addEventListener('click', () => {
-            print();
-        });
     }
 
     // 초기화 실행

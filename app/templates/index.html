@@ -34,7 +34,7 @@
                 <strong class="total-num">0</strong>
                 <div class="search-box">
                     <!-- 차량 번호 검색 입력 -->
-                    <input type="text" placeholder="차량번호 검색" class="search-input" onchange="filterReports()">
+                    <input type="text" placeholder="차량번호 검색" class="search-input">
                 </div>
             </div>
         </div>
@@ -223,7 +223,7 @@
                 <p class="title-text">데이터가 없습니다.</p>
                 <button type="button" class="btn icon btn-close" title="닫기"></button>
             </div>
-             <div class="popup-body">
+            <div class="popup-body">
                 <video class="vehicle-video" controls src="" type="video/webm">동영상을 지원하지 않는 브라우저입니다.</video>
             </div>
         </div>
@@ -481,21 +481,37 @@
         });
     }
 
+    // 디바운싱 함수
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function (...args) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func(...args), delay);
+        };
+    }
+
     // 이벤트 리스너 추가
     function setupEventListeners() {
         document.querySelector("#resultAccordion").addEventListener("click", handleAccordionClick);
 
-        // 캠 리스트에서 클릭 이벤트 처리
         const partLists = document.querySelectorAll(".parts-list li");
         partLists.forEach(part => {
             part.addEventListener("click", handleVideoClick);
         });
 
-        // 선택된 보고서 출력 이벤트 처리
-        const $printBtn = document.querySelector('#printResult');
-        $printBtn.addEventListener('click', () => {
+        const $printBtn = document.querySelector("#printResult");
+        $printBtn.addEventListener("click", () => {
             print();
-        })
+        });
+
+        // filterReports 함수에 디바운싱 적용
+        const filterReportsDebounced = debounce(filterReports, 300);
+
+        // 검색 입력 필드에 이벤트 연결
+        document.querySelector(".search-input").addEventListener("input", (event) => {
+            const searchTerm = event.target.value;
+            filterReportsDebounced(null, searchTerm); // 날짜(null)와 검색어(searchTerm)를 분리하여 전달
+        });
     }
 
     //오늘의 데이터 초기화
@@ -621,24 +637,29 @@
     }
 
     // 보고서 필터링
-    window.filterReports = function filterReports(date = null) {
+    window.filterReports = function filterReports(date = null, carNumber = "") {
         const selectedDate = date || formatDateTime($("#datepickerDent").datepicker("getDate"));
-        if (!selectedDate) return alert("유효하지 않은 날짜입니다.");
+        if (!selectedDate) {
+            alert("유효하지 않은 날짜입니다.");
+            return;
+        }
 
-        const searchInput = $(".search-input").val().trim();
+        const searchInput = carNumber.trim();
 
-        fetch(`/filter_reports?date=${selectedDate}&car_number=${searchInput}`)
+        // 디버깅: 전달된 값 확인
+        console.log("Selected Date:", selectedDate);
+        console.log("Search Input:", searchInput);
+
+        fetch(`/filter_reports?date=${encodeURIComponent(selectedDate)}&car_number=${encodeURIComponent(searchInput)}`)
             .then((response) => response.json())
             .then((data) => {
                 updateAccordion(data); // 아코디언 업데이트
-
-                // 첫 번째 차량 정보 로드
                 if (data.length > 0) {
-                    loadReport(data[0].id); // 첫 번째 차량 ID로 로드
+                    loadReport(data[0].id); // 첫 번째 차량 ID 로드
                 }
             })
             .catch(console.error);
-    }
+    };
 
     // 아코디언 업데이트
     function updateAccordion(data) {

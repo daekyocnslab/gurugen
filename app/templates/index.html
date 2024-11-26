@@ -17,7 +17,10 @@
     <div id="sideMenu">
         <div class="fixed-section">
             <!-- 로고 -->
-            <h1 class="logo"><img src="../static/images/logo.svg" alt="Audi"></h1>
+            <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>
+
+            <!--르노 이미지로 변경시, 로고의 사이즈 지정은 logoImg 클래스에서 width와 height 사이즈를 변경해주세요.-->
+            <!--<h1 class="logo"><img class="logoImg" src = "../static/images/renault.png" alt="Renault"></h1>-->
             <!-- 날짜 선택기 -->
             <div class="datepicker-section">
                 <h2 class="title">일자별 차량</h2>
@@ -513,7 +516,33 @@
             const partsList = clickedVehicle.parentElement.querySelector(".parts-list");
             const fileNameBase = partsList.dataset.fileName;
 
-            if (!fileNameBase) {
+            // 차량 ID 가져오기
+            const vehicleId = partsList?.dataset.id;
+
+            if (!vehicleId) {
+                console.error("Vehicle ID가 없습니다.");
+                return;
+            }
+
+           try {
+                // 차량 데이터를 가져오기
+                const response = await fetch(`/report/${vehicleId}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to load vehicle data: ${response.statusText}`);
+                }
+
+                const vehicleData = await response.json();
+
+                // 메인 및 프린트 영역 업데이트
+                updateMainPanel(vehicleData);
+                updatePrintView(vehicleData);
+
+                console.log("Vehicle data loaded:", vehicleData);
+            } catch (error) {
+                console.error("Error fetching vehicle data:", error);
+            }
+
+           if (!fileNameBase) {
                 console.error("파일 이름이 없습니다.");
                 return;
             }
@@ -912,7 +941,8 @@
         const $container = document.querySelector("#vehicleVideoPop .title-text");
         const videoElement = document.querySelector(".vehicle-video");
 
-        if ($container && videoElement) {
+        console.log(fileName);
+        if ($container && videoElement && fileName != undefined) {
             // 비디오 소스 업데이트
             videoElement.src = `/video/${encodeURIComponent(fileName)}`;
             videoElement.play();

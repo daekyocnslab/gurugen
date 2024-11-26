@@ -16,33 +16,61 @@ GURUGEN DENT 프로젝트는 차량의 Dent(흠집)를 자동으로 분석하고
 ## 프로젝트 구조
 
 ```plaintext
-├── db                  - Database 접속 및 쿼리 모음
-├── route               - 페이지 라우팅 정의
-├── static       
-├──  css
- ├──  font
- ├──  image
- ├──  js
- ├──  vendor
- ├──  video
-├──  templates         
-├── README.md           - GURUGEN DENT 자동분석 시스템의 개요와 설정 방법
-├── .env                - 환경 변수 파일로, 중요한 설정 정보
-├── .gitignore          - Git에 포함되지 않을 파일 목록을 지정
-├── requirements.txt    - 프로젝트 실행에 필요한 Python 라이브러리 목록
-└── webapp.py           - 웹 애플리케이션의 메인 실행 파일
+├── app                  - 프로젝트의 메인 애플리케이션 폴더로, 설정 파일, 데이터베이스 연결, 라우트, 정적 파일 등을 포함합니다.
+│ ├── config.py          - 애플리케이션의 전역 설정 정보를 관리합니다.
+│ ├── db                 - 데이터베이스와 관련된 파일들을 포함합니다.
+│ │ ├── connector.py     - 데이터베이스 연결을 담당하는 모듈입니다.
+│ │ └── queries.py       - 데이터베이스 쿼리문과 관련된 함수들이 정의되어 있습니다.
+│ ├── routes             - 애플리케이션의 라우트(경로)와 관련된 파일들이 위치합니다.
+│ │ ├── __init__.py      - routes 폴더를 파이썬 패키지로 인식하게 하는 초기화 파일입니다.
+│ │ └── main_routes.py   - 메인 라우트(경로)를 정의합니다.
+│ └── static             - 정적 파일(CSS, JS, 이미지, 비디오 등)을 관리하는 폴더입니다.
+│   ├── css              - 스타일을 정의한 파일들이 포함된 폴더입니다.
+│   ├── fonts            - 폰트 파일이 포함된 폴더입니다.
+│   ├── images           - 이미지 파일들이 포함된 폴더입니다.
+│   ├── js               - JavaScript 파일들이 포함된 폴더입니다.
+│   ├── vendor           - 외부 라이브러리(플러그인, 모듈) 파일들이 위치합니다.
+│   └── video            - 비디오 파일이 포함된 폴더입니다.
+└── templates            - HTML 템플릿 파일들이 위치한 폴더입니다.
+├── README.md            - GURUGEN DENT 시스템의 개요와 설정 방법을 설명한 문서입니다.
+├── .env                 - 환경 변수 파일로, 중요한 설정 정보를 관리합니다.
+├── .gitignore           - Git에 포함되지 않을 파일 목록을 지정합니다.
+├── requirements.txt     - 프로젝트 실행에 필요한 Python 라이브러리 목록이 포함된 파일입니다.
+└── webapp.py            - 웹 애플리케이션의 메인 실행 파일입니다.
 ```
-
 
 
 ## Python 버전
 
 GURUGEN DENT 프로젝트는 **Python 3.9.18** 버전을 권장합니다. 프로젝트 호환성을 위해 해당 버전으로 가상 환경을 설정하시길 권장합니다. 
 
-## 주요 설정 
-env 환경설정
-db 설정 및 비디오 폴더 위치 설정
 
+---
+
+## 주요 설정 
+### 1. .env 설정
+프로젝트에서 사용하는 중요한 환경 변수는 `.env` 파일에 저장하여 관리합니다. 이 파일에는 데이터베이스 연결 정보, 비디오 파일 경로 등 보안상 중요한 설정 정보를 포함할 수 있습니다.
+
+   `.env` 파일 예시:
+   ```plaintext
+    DB_HOST=your_database_host
+    DB_PORT=your_database_port
+    DB_USER=your_database_user
+    DB_PASSWORD=your_database_password
+    DB_NAME=your_database_name
+    VIDEO_FOLDER=your_video_folder
+   ```
+----
+### 2. 로고 이미지 변경
+
+#### 1)	새로운 로고 이미지 준비
+   - 변경할 로고 이미지를 준비합니다.
+   - 형식은 SVG, PNG, JPG 중 하나로 선택할 수 있으며, 파일 이름은 기존의 파일 이름과 동일하게 logo.svg로 설정합니다.
+#### 2)	기존 로고 파일 교체
+   - 새로 준비한 로고 파일을 기존의 경로 app/static/images/logo.svg에 업로드합니다.
+   - 이때, 기존 파일을 덮어쓰기(overwrite)하여 교체합니다.
+
+---
 
 ## 환경 설정 및 실행 방법
 
@@ -80,20 +108,7 @@ db 설정 및 비디오 폴더 위치 설정
    ```
 
 
-4. **환경 변수 설정**
-
-    프로젝트에서 사용하는 중요한 환경 변수는 `.env` 파일에 저장하여 관리합니다. 이 파일에는 데이터베이스 연결 정보, 비밀 키 등 보안상 중요한 설정 정보를 포함할 수 있습니다.
-
-   `.env` 파일 예시:
-   ```plaintext
-   DB_HOST=your_database_host
-   DB_USER=your_database_user
-   DB_PASS=your_database_password
-   SECRET_KEY=your_secret_key
-   ```
-
-
-5. **웹 애플리케이션 실행**
+4. **웹 애플리케이션 실행**
 
     `webapp.py`는 GURUGEN DENT 시스템의 메인 실행 파일입니다. 이 파일을 실행하여 웹 애플리케이션을 시작할 수 있습니다.
    
@@ -101,14 +116,14 @@ db 설정 및 비디오 폴더 위치 설정
     python webapp.py
    ```
 
-
-   특정 호스트와 포트를 설정하려면:
+    특정 호스트와 포트를 설정하려면:
    ```bash
     python webapp.py --host=0.0.0.0 --port=8080(포트번호)
    ```
-   
+
 애플리케이션을 종료하려면 터미널에서 Ctrl + C를 눌러 서버를 중지합니다.
 
+---
 
 
 ### 주요 수정 내용 요약

@@ -4,8 +4,6 @@ import os
 from distutils.command.config import config
 
 from flask import Blueprint, request, jsonify, render_template, send_from_directory
-from datetime import datetime
-from dotenv import load_dotenv
 from app.config import config  # config 모듈에서 VIDEO_FOLDER 설정을 가져옴
 from app.db.queries import fetch_reports, fetch_report_by_id, filter_reports_by_date_and_car, insert_report
 

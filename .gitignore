@@ -1,9 +1,5 @@
 # Python 가상 환경
 venv/
-bin/
-include/
-lib/
-pyvenv.cfg
 
 
 # 파이썬 컴파일 파일

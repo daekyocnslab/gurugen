@@ -572,7 +572,7 @@
                 updateMainPanel(vehicleData);
                 updatePrintView(vehicleData);
 
-                console.log("Vehicle data loaded:", vehicleData);
+                {#console.log("Vehicle data loaded:", vehicleData);//디버깅용#}
             } catch (error) {
                 console.error("Error fetching vehicle data:", error);
             }
@@ -615,7 +615,7 @@
                 }
             });
 
-            console.log(videoChecks); // 디버깅용
+            {#console.log(videoChecks); // 디버깅용#}
             return;
         }
 
@@ -629,7 +629,7 @@
 
             // `data-video-file-name` 속성 읽기
             const fileName = clickedPart.dataset.videoFileName;
-            console.log("Part clicked:", clickedPart.dataset);
+            {#console.log("Part clicked:", clickedPart.dataset); //디버깅용#}
 
             showPopUp(clickedPart.dataset, fileName); // 팝업 표시
             return;
@@ -647,8 +647,8 @@
         const searchInput = carNumber.trim();
 
         // 디버깅: 전달된 값 확인
-        console.log("Selected Date:", selectedDate);
-        console.log("Search Input:", searchInput);
+        {#console.log("Selected Date:", selectedDate);#}
+        {#console.log("Search Input:", searchInput);#}
 
         fetch(`/filter_reports?date=${encodeURIComponent(selectedDate)}&car_number=${encodeURIComponent(searchInput)}`)
             .then((response) => response.json())
@@ -974,7 +974,6 @@
         const $container = document.querySelector("#vehicleVideoPop .title-text");
         const videoElement = document.querySelector(".vehicle-video");
 
-        console.log(fileName);
         if ($container && videoElement && fileName != undefined) {
             // 비디오 소스 업데이트
             videoElement.src = `/video/${encodeURIComponent(fileName)}`;

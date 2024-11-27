@@ -663,7 +663,7 @@
             .then((response) => response.json())
             .then((data) => {
                 updateAccordion(data); // 아코디언 업데이트
-                if (data.length > 0 && (!selectedReportId || data[0].id !== selectedReportId)) {
+                if (data.length > 0) {
                     loadReport(data[0].id); // 첫 번째 보고서 로드
                 }
             })
@@ -679,9 +679,29 @@
         const totalNumElement = document.querySelector(".total-num");
 
         // 데이터가 없을 경우 처리
-        if (!data.length) {
+        if (data.length < 1) {
             accordion.innerHTML = '<li class="no-results">검색 결과가 없습니다.</li>';
             totalNumElement.textContent = "0";
+            document.querySelector(".pannel-content").innerHTML = `
+                <ul class="summary-list">
+                    <li><dl><dt>차량 번호</dt><dd></dd></dl></li>
+                    <li><dl><dt>입차 일시</dt><dd></dd></dl></li>
+                    <li><dl><dt>분석 일시</dt><dd></dd></dl></li>
+                </ul>
+                <div class="dent-total">
+                    <h4 class="title">전체 덴트 수량</h4>
+                    <table class="table">
+                        <tr><th>구분</th><td>덴트</td><td>스크래치</td><td>데미지</td></tr>
+                        <tr><th>수량</th><td></td></tr>
+                    </table>
+                </div>
+                <article class="vehicle-wrap">
+                    <div class="__vehicle-bg"></div>
+                    ${generateDentTable('A', 'A 좌측', data.left_dent_total || 0, data.left_scratch || 0, data.left_damage || 0)}
+                    ${generateDentTable('B', 'B 본넷', data.front_dent_total || 0, data.front_scratch || 0, data.front_damage || 0)}
+                    ${generateDentTable('C', 'C 우측', data.right_dent_total || 0, data.right_scratch || 0, data.right_damage || 0)}
+                    ${generateDentTable('D', 'D 트렁크(테일 게이트)', data.tail_dent_total || 0, data.tail_scratch || 0, data.tail_damage || 0)}
+                </article>`;
             return;
         }
 

@@ -18,10 +18,10 @@
     <div id="sideMenu">
         <div class="fixed-section">
             <!-- 로고 -->
-            <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>
+{#            <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>#}
 
             <!--르노 이미지로 변경시, 로고의 사이즈 지정은 logoImg 클래스에서 width와 height 사이즈를 변경해주세요.-->
-            <!--<h1 class="logo"><img class="logoImg" src = "../static/images/renault.png" alt="Renault"></h1>-->
+           <h1 class="logo"><img class="logoImg" src="../static/images/renault.png" alt="Renault" style="width: 66px; height: 44px;"></h1>
             <!-- 날짜 선택기 -->
             <div class="datepicker-section">
                 <h2 class="title">일자별 차량</h2>
@@ -437,7 +437,8 @@
     import Accordion from '../static/js/Accordion.js';
     import Popup from '../static/js/Popup.js';
 
-    let currentReportId = null;
+    let selectedDate = null; // 현재 선택된 날짜
+    let selectedReportId = null; // 현재 선택된 아코디언 항목 ID
 
     // 초기화
     function initialize() {
@@ -462,13 +463,15 @@
                     addYearSuffix();
                 }, 0);
             },
-            onSelect: ((dateText) => {
-                // 날짜 텍스트를 업데이트
-                $(".search-section p").text(`${dateText} 총 분석 차량 수`);
+            onSelect: (dateText) => {
+                if (selectedDate === dateText) {
+                    console.log("동일한 날짜 선택으로 filterReports 호출 중단.");
+                    return;
+                }
 
-                // 선택된 날짜로 보고서를 필터링
-                filterReports();
-            })
+                $(".search-section p").text(`${dateText} 총 분석 차량 수`);
+                filterReports(dateText); // 새로운 날짜로 보고서 필터링
+            }
         });
         addYearSuffix(); // '년' 텍스트 추가
     }
@@ -559,22 +562,15 @@
                 return;
             }
 
-            try {
-                // 차량 데이터를 가져오기
-                const response = await fetch(`/report/${vehicleId}`);
-                if (!response.ok) {
-                    throw new Error(`Failed to load vehicle data: ${response.statusText}`);
-                }
+            // 선택한 항목이 이전과 동일한 경우 호출 중단
+            if (vehicleId && selectedReportId === vehicleId) {
+                console.log("동일한 아코디언 항목 클릭으로 loadReport 호출 중단.");
+                return;
+            }
 
-                const vehicleData = await response.json();
-
-                // 메인 및 프린트 영역 업데이트
-                updateMainPanel(vehicleData);
-                updatePrintView(vehicleData);
-
-                {#console.log("Vehicle data loaded:", vehicleData);//디버깅용#}
-            } catch (error) {
-                console.error("Error fetching vehicle data:", error);
+            // 새로운 항목인 경우 데이터 로드
+            if (vehicleId) {
+                loadReport(vehicleId);
             }
 
             // 파일 이름 확인
@@ -638,11 +634,23 @@
 
     // 보고서 필터링
     window.filterReports = function filterReports(date = null, carNumber = "") {
-        const selectedDate = date || formatDateTime($("#datepickerDent").datepicker("getDate"));
-        if (!selectedDate) {
-            alert("유효하지 않은 날짜입니다.");
+        const currentDate = $("#datepickerDent").datepicker("getDate");
+        const formattedDate = date || (currentDate ? formatDateTime(currentDate) : null);
+
+        // 날짜가 유효하지 않은 경우 처리
+        if (!formattedDate) {
+            console.log("유효하지 않은 날짜입니다.");
             return;
         }
+
+        // 기존 선택된 날짜와 검색어가 동일하면 중단
+        if (selectedDate === formattedDate && !carNumber) {
+            console.log("동일한 날짜로 filterReports 호출 중단.");
+            return;
+        }
+
+        // 새로운 날짜로 상태 업데이트
+        selectedDate = formattedDate;
 
         const searchInput = carNumber.trim();
 
@@ -654,8 +662,8 @@
             .then((response) => response.json())
             .then((data) => {
                 updateAccordion(data); // 아코디언 업데이트
-                if (data.length > 0) {
-                    loadReport(data[0].id); // 첫 번째 차량 ID 로드
+                if (data.length > 0 && (!selectedReportId || data[0].id !== selectedReportId)) {
+                    loadReport(data[0].id); // 첫 번째 보고서 로드
                 }
             })
             .catch(console.error);
@@ -706,6 +714,14 @@
 
     // 보고서 로드
     function loadReport(reportId) {
+        // 동일한 reportId이면 호출하지 않음
+        if (selectedReportId === reportId) {
+            console.log("동일한 reportId로 loadReport 호출 중단.");
+            return;
+        }
+
+        selectedReportId = reportId; // 새로운 보고서 ID로 갱신
+
         fetch(`/report/${reportId}`)
             .then((response) => response.json())
             .then((data) => {
@@ -717,7 +733,7 @@
 
     // 메인 패널 업데이트
     function updateMainPanel(data) {
-        currentReportId = data.id;
+        selectedReportId = data.id;
 
         document.querySelector(".pannel-content").innerHTML = `
             <ul class="summary-list">

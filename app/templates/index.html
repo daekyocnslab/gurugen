@@ -636,7 +636,7 @@
     // 보고서 필터링
     window.filterReports = function filterReports(date = null, carNumber = "") {
         const currentDate = $("#datepickerDent").datepicker("getDate");
-        const formattedDate = date || (currentDate ? formatDateTime(currentDate) : null);
+        const formattedDate = date || (currentDate ? formatDateTimeUTC(currentDate) : null);
 
         // 날짜가 유효하지 않은 경우 처리
         if (!formattedDate) {
@@ -948,13 +948,21 @@
             </div>`;
     }
 
-    // 날짜 및 시간 포맷
+
+    // 날짜 및 시간 포맷 (UTC)
+    function formatDateTimeUTC(dateTime) {
+        // 입력된 날짜 문자열을 Date 객체로 변환
+        const date = new Date(dateTime);
+        return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")} / ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+    }
+
+    // 날짜 및 시간 포맷 (KST)
     function formatDateTime(dateTime) {
         // 입력된 날짜 문자열을 Date 객체로 변환
         const date = new Date(dateTime);
 
-        // KST 기준으로 변환 (UTC+9)
-        const kstOffset = 9 * 60; // KST offset in minutes
+        // KST 기준으로 변환 (UTC-9)
+        const kstOffset = -9 * 60; // KST offset in minutes
         const kstDate = new Date(date.getTime() + kstOffset * 60 * 1000);
 
         // 포맷팅

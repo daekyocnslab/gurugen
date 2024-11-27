@@ -18,10 +18,11 @@
     <div id="sideMenu">
         <div class="fixed-section">
             <!-- 로고 -->
-{#            <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>#}
+            {#            <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>#}
 
             <!--르노 이미지로 변경시, 로고의 사이즈 지정은 logoImg 클래스에서 width와 height 사이즈를 변경해주세요.-->
-           <h1 class="logo"><img class="logoImg" src="../static/images/renault.png" alt="Renault" style="width: 66px; height: 44px;"></h1>
+            <h1 class="logo"><img class="logoImg" src="../static/images/renault.png" alt="Renault"
+                                  style="width: 66px; height: 44px;"></h1>
             <!-- 날짜 선택기 -->
             <div class="datepicker-section">
                 <h2 class="title">일자별 차량</h2>
@@ -949,8 +950,15 @@
 
     // 날짜 및 시간 포맷
     function formatDateTime(dateTime) {
+        // 입력된 날짜 문자열을 Date 객체로 변환
         const date = new Date(dateTime);
-        return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")} / ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+
+        // KST 기준으로 변환 (UTC+9)
+        const kstOffset = 9 * 60; // KST offset in minutes
+        const kstDate = new Date(date.getTime() + kstOffset * 60 * 1000);
+
+        // 포맷팅
+        return `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1).toString().padStart(2, "0")}.${kstDate.getDate().toString().padStart(2, "0")} / ${kstDate.getHours().toString().padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`;
     }
 
     // 캠 리스트 클릭 시 동영상 팝업 처리

@@ -608,7 +608,7 @@ function showPopUp(clickedPart, fileName) {
 
         // 팝업 정보 업데이트
         $container.innerHTML = `
-            <span class="date">${clickedPart.date}</span>
+            <span class="date">${formatDateTime(clickedPart.date)}</span>
             <span class="number">${clickedPart.number}</span>
             <span class="part">${clickedPart.part}</span>
         `;

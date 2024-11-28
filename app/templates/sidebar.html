@@ -1,0 +1,31 @@
+
+<!-- Sidebar -->
+<div id="sideMenu">
+    <div class="fixed-section">
+        <!-- 로고 -->
+        {#            <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>#}
+
+        <!--르노 이미지로 변경시, 로고의 사이즈 지정은 logoImg 클래스에서 width와 height 사이즈를 변경해주세요.-->
+        <h1 class="logo"><img class="logoImg" src="../static/images/renault.png" alt="Renault"
+                              style="width: 66px; height: 44px;"></h1>
+        <!-- 날짜 선택기 -->
+        <div class="datepicker-section">
+            <h2 class="title">일자별 차량</h2>
+            <div id="datepickerDent"></div>
+        </div>
+        <!-- 검색 섹션 -->
+        <div class="search-section">
+            <p>2024년 10월 21일 총 분석 차량 수</p>
+            <!-- 분석 차량 수를 표시하는 요소 -->
+            <strong class="total-num">0</strong>
+            <div class="search-box">
+                <!-- 차량 번호 검색 입력 -->
+                <input type="text" placeholder="차량번호 검색" class="search-input">
+            </div>
+        </div>
+    </div>
+    <!-- 검색 결과 리스트 -->
+    <div class="result-section">
+        <ul id="resultAccordion" class="result-list"></ul>
+    </div>
+</div>

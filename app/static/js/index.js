@@ -540,7 +540,6 @@ function generatePrintDentTable(section, sectionName, dent, scratch, damage) {
             </div>`;
 }
 
-
 // 날짜 및 시간 포맷 (UTC)
 function formatDateTimeUTC(dateTime) {
     // 입력된 날짜 문자열을 Date 객체로 변환
@@ -626,9 +625,8 @@ function showPopUp(clickedPart, fileName) {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
+// 초기화 실행
     initialize();
 });
 
-// 초기화 실행

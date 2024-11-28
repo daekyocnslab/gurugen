@@ -637,10 +637,6 @@ input::placeholder {
         height: 54px;
         background: url(../images/icon/print.png) no-repeat 0px -23px / 90px 78px;
     }
-    .logoImg {
-        width: 66px;
-        height: 40px;
-    }
     .print-wrap .total-box {
         margin-top: 60px;
     }

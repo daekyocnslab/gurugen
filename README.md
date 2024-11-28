@@ -68,12 +68,12 @@ GURUGEN DENT 프로젝트는 **Python 3.9.18** 버전을 권장합니다. 프로
 ### 2. 로고 이미지 변경
 현재 Audi 사의 로고 이미지를 출력하고 있습니다. 추가적으로 Renault 사의 로고 이미지를 변경할 수 있도록 코드를 추가하였습니다.
 
-로고 이미지를 변경하기 위해서는 index.html에서 아래의 소스코드를 변경해주시면 됩니다.
+로고 이미지를 변경하기 위해서는 'sidebar.html'에서 아래의 소스코드를 변경해주시면 됩니다.
 
     <h1 class="logo"><img class="logoImg" src="../static/images/logo.svg" alt="Audi"></h1>
 
-    <!--르노 이미지로 변경시, 로고의 사이즈 지정은 logoImg 클래스에서 width와 height 사이즈를 변경해주세요.-->
-    <!--<h1 class="logo"><img class="logoImg" src = "../static/images/renault.png" alt="Renault"></h1>-->
+    <!--르노 이미지로 변경시, 로고의 사이즈 지정은 width와 height 사이즈를 변경해주세요.-->
+    <!--<h1 class="logo"><img class="logoImg" src = "../static/images/renault.png" alt="Renault" style="width: 66px; height: 44px;"></h1>-->
 
 만일 새로운 이미지를 출력하려면, 아래의 절차와 같습니다.
 

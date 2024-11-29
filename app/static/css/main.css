@@ -629,13 +629,13 @@ input::placeholder {
         font-size: var(--font-h1);
         text-align: center;
     }
-    .print-wrap .logo {
+   .print-wrap .logo {
         position: absolute;
         top: 0;
         left: 0;
         width: 90px;
         height: 54px;
-        background: url(../images/icon/print.png) no-repeat 0px -23px / 90px 78px;
+        background: url(../images/renault.png) no-repeat 0px -10px / 81px 70.2px;
     }
     .print-wrap .total-box {
         margin-top: 60px;

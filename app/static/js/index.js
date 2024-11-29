@@ -210,11 +210,11 @@ window.filterReports = function filterReports(date = null, carNumber = "") {
         return;
     }
 
-    // 기존 선택된 날짜와 검색어가 동일하면 중단
-    if (selectedDate === formattedDate && !carNumber) {
-        console.log("동일한 날짜로 filterReports 호출 중단.");
-        return;
-    }
+    // // 기존 선택된 날짜와 검색어가 동일하면 중단
+    // if (selectedDate === formattedDate && !carNumber) {
+    //     console.log("동일한 날짜로 filterReports 호출 중단.");
+    //     return;
+    // }
 
     // 새로운 날짜로 상태 업데이트
     selectedDate = formattedDate;

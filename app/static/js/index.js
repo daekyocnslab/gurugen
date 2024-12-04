@@ -286,12 +286,12 @@ function updateAccordion(data) {
                 </div>
                 <div class="accord-body">
                     <ul class="parts-list" data-id="${vehicle.id}" data-file-name="${vehicle.file_name}">
-                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam1" data-part="우측 하단">우측 하단 (camera01)</li>
-                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam2" data-part="우측 중간">우측 중간 (camera02)</li>
-                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam3" data-part="우측 상단">우측 상단 (camera03)</li>
-                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam4" data-part="좌측 하단">좌측 하단 (camera04)</li>
-                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam5" data-part="좌측 중간">좌측 중간 (camera05)</li>
-                        <li data-date="${vehicle.data_time.slice(0, -4)}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam6" data-part="좌측 상단">좌측 상단 (camera06)</li>
+                        <li data-date="${vehicle.data_time}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam1" data-part="우측 하단">우측 하단 (camera01)</li>
+                        <li data-date="${vehicle.data_time}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam2" data-part="우측 중간">우측 중간 (camera02)</li>
+                        <li data-date="${vehicle.data_time}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam3" data-part="우측 상단">우측 상단 (camera03)</li>
+                        <li data-date="${vehicle.data_time}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam4" data-part="좌측 하단">좌측 하단 (camera04)</li>
+                        <li data-date="${vehicle.data_time}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam5" data-part="좌측 중간">좌측 중간 (camera05)</li>
+                        <li data-date="${vehicle.data_time}" data-number="${vehicle.car_number}" data-file-name="${vehicle.file_name}_cam6" data-part="좌측 상단">좌측 상단 (camera06)</li>
                     </ul>
                 </div>`;
         accordion.appendChild(listItem);
@@ -554,7 +554,7 @@ function formatDateTime(dateTime) {
 
     // KST 기준으로 변환 (UTC-9)
     const kstOffset = -9 * 60; // KST offset in minutes
-    const kstDate = new Date(date.getTime() + kstOffset * 60 * 1000);
+    const kstDate = new Date(date.getTime() - kstOffset * 60 * 1000);
 
     // 포맷팅
     return `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1).toString().padStart(2, "0")}.${kstDate.getDate().toString().padStart(2, "0")} / ${kstDate.getHours().toString().padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`;

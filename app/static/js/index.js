@@ -554,7 +554,7 @@ function formatDateTime(dateTime) {
 
     // KST 기준으로 변환 (UTC-9)
     const kstOffset = -9 * 60; // KST offset in minutes
-    const kstDate = new Date(date.getTime() - kstOffset * 60 * 1000);
+    const kstDate = new Date(date.getTime() + kstOffset * 60 * 1000);
 
     // 포맷팅
     return `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1).toString().padStart(2, "0")}.${kstDate.getDate().toString().padStart(2, "0")} / ${kstDate.getHours().toString().padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`;

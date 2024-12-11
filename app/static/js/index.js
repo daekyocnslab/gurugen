@@ -144,15 +144,24 @@ async function handleAccordionClick(event) {
         }
 
         // 동영상 존재 여부 확인
+        // 특정 파일 이름을 기반으로 6개의 영상 파일 목록 반환 (mp4 우선)
         const videoChecks = await Promise.all(
-            Array.from({length: 6}).map(async (_, i) => {
+            Array.from({ length: 6 }).map(async (_, i) => {
                 const cameraNumber = `cam${i + 1}`;
-                const videoFileName = `${fileNameBase}_${cameraNumber}.webm`;
-                const response = await fetch(`/video/exists/${encodeURIComponent(videoFileName)}`);
-                return {
-                    fileName: videoFileName,
-                    exists: response.ok,
-                };
+                const mp4FileName = `${fileNameBase}_${cameraNumber}.mp4`;
+                const webmFileName = `${fileNameBase}_${cameraNumber}.webm`;
+
+                const mp4Response = await fetch(`/video/exists/${encodeURIComponent(mp4FileName)}`);
+                if (mp4Response.ok) {
+                    return { fileName: mp4FileName, exists: true };
+                }
+
+                const webmResponse = await fetch(`/video/exists/${encodeURIComponent(webmFileName)}`);
+                if (webmResponse.ok) {
+                    return { fileName: webmFileName, exists: true };
+                }
+
+                return { fileName: null, exists: false };
             })
         );
 

@@ -12,13 +12,18 @@ main_routes = Blueprint('main_routes', __name__)
 
 
 def get_video_files(file_name):
-    """특정 파일 이름을 기반으로 6개의 영상 파일 목록 반환"""
-    # config.VIDEO_FOLDER에서 file_name과 일치하는 파일들을 확인
-    return [
-        f"{file_name}_cam{i}.webm"
-        for i in range(1, 7)
-        if os.path.exists(os.path.join(config.VIDEO_FOLDER, f"{file_name}_cam{i}.webm"))
-    ]
+    """특정 파일 이름을 기반으로 6개의 영상 파일 목록 반환 (mp4 우선)"""
+    video_files = []
+    for i in range(1, 7):
+        webm_path = os.path.join(config.VIDEO_FOLDER, f"{file_name}_cam{i}.webm")
+        mp4_path = os.path.join(config.VIDEO_FOLDER, f"{file_name}_cam{i}.mp4")
+
+        if os.path.exists(mp4_path):  # mp4가 있으면 추가
+            video_files.append(f"{file_name}_cam{i}.mp4")
+        elif os.path.exists(webm_path):  # mp4가 없고 webm이 있으면 추가
+            video_files.append(f"{file_name}_cam{i}.webm")
+
+    return video_files
 
 @main_routes.route('/video/list/<file_name>', methods=['GET'])
 def video_list(file_name):
